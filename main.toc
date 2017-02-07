@@ -1,6 +1,0 @@
-\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
-\defcounter {refsection}{0}\relax 
-\select@language {english}
-\contentsline {chapter}{\numberline {1}Problem statement}{1}{chapter.2}
-\contentsline {section}{\numberline {1.1}Problem description}{1}{section.3}
-\contentsline {section}{\numberline {1.2}Problem statement}{1}{section.4}
