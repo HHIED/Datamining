@@ -94,7 +94,7 @@ headsepline, % Uncomment to get a line under the header
 
 \makeglossaries
 	
-\input{glossary.tex}
+%\input{glossary.tex}
 
 %----------------------------------------------------------------------------------------
 %	MARGIN SETTINGS
@@ -114,23 +114,19 @@ headsepline, % Uncomment to get a line under the header
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Ali og den forsvundne BMW} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
-\supervisor{Mathias Emil \textsc{Hansen}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
+\thesistitle{Datamining and its use} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\supervisor{Jan Corfixen Sørensen \textsc{Sørensen}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
-\degree{Software Engineering 4. semester} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
-\author{Casper \textsc{Middelhede}\\
-	Ditlev \textsc{Selz Stoltenberg Stjerne}\\
-	Lars Bo \textsc{Meixner}\\
-	Lasse Bjørn \textsc{Hansen}\\
-	Simon \textsc{Flensted}\\
-	Steffen \textsc{Hansen}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
+\degree{Software Engineering 6. semester} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
+\author{Lasse Bjørn \textsc{Hansen}\\
+	Simon \textsc{Flensted}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
 \addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
 \subject{Software Engineering} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
 \keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
 \university{University of Southern Denmark} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
 \department{TEK} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
-\group{Group 3} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
+\group{Group ??} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 \faculty{TEK - Mærsk McKinney Møller Institut} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
 \hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
@@ -151,7 +147,7 @@ headsepline, % Uncomment to get a line under the header
 \begin{center}
 
 \textsc{\LARGE \univname}\\[1.5cm] % University name
-\textsc{\Large Software Engineering 4. Semester}\\[0.5cm] % Thesis type
+\textsc{\Large Software Engineering 6. Semester}\\[0.5cm] % Thesis type
 
 \HRule \\[0.4cm] % Horizontal line
 {\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
@@ -169,7 +165,7 @@ headsepline, % Uncomment to get a line under the header
 {\supname} % Supervisor name - remove the \href bracket to remove the link  
 \end{flushright}
 \end{minipage}\\[3cm]
-\includegraphics{SDU-Logo} % University/department logo - uncomment to place it
+%\includegraphics{SDU-Logo} % University/department logo - uncomment to place it
 \\
 \large \textit{A report submitted in fulfillment of the requirements\\  of \degreename}\\[0.3cm] % University requirement text
 \textit{at}\\[0.4cm]
@@ -188,14 +184,14 @@ headsepline, % Uncomment to get a line under the header
 
 %\thispagestyle{plain}
 
-\include{Chapters/Abstract}
+%\include{Chapters/Abstract}
 \clearpage
 
 %----------------------------------------------------------------------------------------
 %	PREFACE / ACKNOWLEDGMENTS
 %----------------------------------------------------------------------------------------
 
-\include{Chapters/Preface}
+%\include{Chapters/Preface}
 
 %----------------------------------------------------------------------------------------
 %	QUOTATION PAGE
@@ -203,7 +199,7 @@ headsepline, % Uncomment to get a line under the header
 
 \vspace*{0.2\textheight}
 
-\noindent\Huge{\enquote{\itshape Did you clean and build?}}\bigbreak
+\noindent\Huge{\enquote{\itshape Some quote}}\bigbreak
 \hfill \Large{- Gruppe 3}
 \normalsize
 
@@ -212,7 +208,7 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 
 \thispagestyle{plain}
-\include{Chapters/Reading-guide}
+%\include{Chapters/Reading-guide}
 %----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------
@@ -225,58 +221,7 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 
 %\thispagestyle{plain}
-\section*{Editorial}
-\addchaptertocentry{Editorial}
 
-\begin{tabular}{p{9cm} p{5cm}}
-{\textbf{\emph{Lasse Bjørn Hansen}}
-\begin{itemize}
-\setlength\itemsep{0.05em}
-\item Requirements
-\item Implementation
-\item Discussion
-\end{itemize}} & 
-{\textbf{\emph{Ditlev Stjerne}}
-\begin{itemize}
-\setlength\itemsep{0.05em}
-\item Design
-\item Implementation
-\item Discussion
-\end{itemize}} \\
-{\textbf{\emph{Lars Bo Meixner}}
-\begin{itemize}
-\setlength\itemsep{0.05em}
-\item Abstract
-\item Analysis
-\item Implementation
-\item Test
-\end{itemize}} &
-{\textbf{\emph{Steffen Hansen}}
-\begin{itemize}
-\setlength\itemsep{0.05em}
-\item Design
-\item Implementation
-\item Conclusion
-\end{itemize}} \\
-{\textbf{\emph{Simon Haugaard Flensted}}
-\begin{itemize}
-\setlength\itemsep{0.05em}
-\item Introduction
-\item Requirements
-\item Implementation
-\item Conclusion
-\end{itemize}} &
-{\textbf{\emph{Casper Middelhede}}
-\begin{itemize}
-\setlength\itemsep{0.05em}
-\item Analysis
-\item Implementation
-\item Test
-\item Discussion
-\end{itemize}} \\
-\end{tabular}
-
-\clearpage
 
 %----------------------------------------------------------------------------------------
 %	GLOSSARY LIST
@@ -294,14 +239,14 @@ headsepline, % Uncomment to get a line under the header
 
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
-\include{Chapters/Chapter1}
-\include{Chapters/Requirements}
-\include{Chapters/Chapter3}
-\include{Chapters/Chapter4}
-\include{Chapters/Chapter5} 
-\include{Chapters/Chapter6}
-\include{Chapters/Chapter7} 
-\include{Chapters/Conclusion}
+%\include{Chapters/Chapter1}
+%\include{Chapters/Requirements}
+%\include{Chapters/Chapter3}
+%\include{Chapters/Chapter4}
+%\include{Chapters/Chapter5} 
+%\include{Chapters/Chapter6}
+%\include{Chapters/Chapter7} 
+%\include{Chapters/Conclusion}
 %\include{Chapters/Chapter8}
 %\include{Chapters/Chapter9}
 %\include{Chapters/Chapter10}
@@ -311,11 +256,11 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 
 \appendix % Cue to tell LaTeX that the following "chapters" are Appendices
-\input{Appendices/Code-conventions}
-\input{Appendices/Process}
-\input{Appendices/Testing}
-\input{Appendices/Test-results}
-\input{Appendices/Tidslinje}
+%\input{Appendices/Code-conventions}
+%\input{Appendices/Process}
+%\input{Appendices/Testing}
+%\input{Appendices/Test-results}
+%\input{Appendices/Tidslinje}
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
