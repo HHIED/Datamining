@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.2.7)  7 FEB 2017 09:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.2.7)  7 FEB 2017 10:49
 entering extended mode
 **./main.tex
 (main.tex
@@ -2197,7 +2197,7 @@ File: english.lbx 2016/12/05 v3.7 biblatex localization (PK/JW/AB)
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 
-(main.aux)
+(main.aux (Chapters/chapter1_ProlemStatement.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 136.
@@ -2217,7 +2217,8 @@ LaTeX Font Info:    ... okay on input line 136.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 136.
 LaTeX Font Info:    ... okay on input line 136.
 LaTeX Font Info:    Try loading font information for T1+ppl on input line 136.
- ("D:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1ppl.fd"
+
+("D:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1ppl.fd"
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
 Now handling font encoding TS1 ...
@@ -2435,7 +2436,13 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 1: section
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 153.
-[1
+<Figures/SDU-Logo.png, id=18, 237.5274pt x 93.7101pt>
+File: Figures/SDU-Logo.png Graphic file (type png)
+
+<use Figures/SDU-Logo.png>
+Package pdftex.def Info: Figures/SDU-Logo.png used on input line 168.
+(pdftex.def)             Requested size: 237.52681pt x 93.70987pt.
+ [1
 
 \openout6 = `main.xdy'.
 
@@ -2443,14 +2450,18 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <20.74> not available
 
 
 
-{C:/Users/lasse/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+{C:/Users/lasse/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./Figures/S
+DU-Logo.png>]
 1: section
 [1
 
 ]
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 215.
- (main.toc)
+ (main.toc
+LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 4.
+)
 \tf@toc=\write10
 \openout10 = `main.toc'.
 
@@ -2466,35 +2477,62 @@ No file main.acr.
 
 ]
 1: section
+\openout2 = `Chapters/chapter1_ProlemStatement.aux'.
+
+(Chapters/chapter1_ProlemStatement.tex
+Chapter 1.
+LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 11.
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--17
+
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 24.
+("D:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omsppl.fd"
+File: omsppl.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 24.
+)
+1: section
+[1
+
+
+
+
+
+]
 
 LaTeX Warning: Empty bibliography on input line 274.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 278.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 278.
-(main.aux)
+(main.aux (Chapters/chapter1_ProlemStatement.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 278.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 278.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+(rerunfilecheck)             Checksum: 8F37A205DC666536ECB2963DB35DD965;424.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 51654 strings out of 493333
- 1034914 string characters out of 3139195
- 1434924 words of memory out of 3000000
- 54463 multiletter control sequences out of 15000+200000
- 33789 words of font info for 65 fonts, out of 3000000 for 9000
+ 51713 strings out of 493333
+ 1036019 string characters out of 3139195
+ 1436924 words of memory out of 3000000
+ 54502 multiletter control sequences out of 15000+200000
+ 36687 words of font info for 69 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,19n,72p,10379b,1559s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 73i,19n,72p,10379b,1603s stack positions out of 5000i,500n,10000p,200000b,50000s
 {D:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<D:/Program Files/Mi
-KTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><D:/Program Files/MiKTeX 2.9/fonts
-/type1/urw/palatino/uplr8a.pfb><D:/Program Files/MiKTeX 2.9/fonts/type1/urw/pal
-atino/uplri8a.pfb>
-Output written on main.pdf (4 pages, 51574 bytes).
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX 2.9
+/fonts/type1/urw/palatino/uplb8a.pfb><D:/Program Files/MiKTeX 2.9/fonts/type1/u
+rw/palatino/uplr8a.pfb><D:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/up
+lri8a.pfb>
+Output written on main.pdf (5 pages, 81318 bytes).
 PDF statistics:
- 40 PDF objects out of 1000 (max. 8388607)
- 6 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 69 PDF objects out of 1000 (max. 8388607)
+ 10 named destinations out of 1000 (max. 500000)
+ 42 words of extra memory for PDF output out of 10000 (max. 10000000)
 
