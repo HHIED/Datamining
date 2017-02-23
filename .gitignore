@@ -29,6 +29,7 @@
 *.nlo
 *.out
 *.pdfsync
+*.pdf
 *.ps
 *.run.xml
 *.snm
@@ -37,6 +38,7 @@
 *.vrb
 *.xdy
 *.tdo
+main-blx.bib
 
 TSWLatexianTemp*
 *.pdf
