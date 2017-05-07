@@ -49,6 +49,10 @@ headsepline, % Uncomment to get a line under the header
 \usepackage{longtable} %for creating tables across several pages
 \usepackage{tabu} %for creating long tables
 \usepackage[table]{xcolor}
+\usepackage{lscape}
+\usepackage{seqsplit}
+\usepackage{graphicx}
+\usepackage{adjustbox}
 
 
 
@@ -96,7 +100,7 @@ headsepline, % Uncomment to get a line under the header
 
 \makeglossaries
 	
-%\input{glossary.tex}
+\input{glossary.tex}
 
 %----------------------------------------------------------------------------------------
 %	MARGIN SETTINGS
@@ -242,6 +246,7 @@ headsepline, % Uncomment to get a line under the header
 % Uncomment the lines as you write the chapters
 \include{Chapters/Chapter1_Introduction}
 \include{Chapters/chapter1_ProlemStatement}
+\include{Chapters/Chapter5_implementation}
 %\include{Chapters/Requirements}
 %\include{Chapters/Chapter3}
 %\include{Chapters/Chapter4}
@@ -258,7 +263,9 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 
 \appendix % Cue to tell LaTeX that the following "chapters" are Appendices
-%\input{Appendices/Code-conventions}
+\begin{landscape}
+\input{Appendices/APICommands}
+\end{landscape}
 %\input{Appendices/Process}
 %\input{Appendices/Testing}
 %\input{Appendices/Test-results}
