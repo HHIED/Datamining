@@ -23,6 +23,10 @@ In the beginning of the project we were supplied with data from one of \gls{Stru
 \item Profile: A collection of every users signed up at the website. Contains 3037 profiles.
 \item BehaviorData: A collection of every unique action performed by visitors on the website, for example when a visitor views a product a new row is made with the visitor's UID, the product UID and the timestamp. Contains 3,326,736 visitor actions.
 \item Order: Contains each profile's orders. Contains 5520 orders.
+\item Product: A collection of all products on the website with their unique IDs. Contains 22,445 products.
+\item ProductGroup: A collection of all product groups. Contains 262 product groups.
+\item AttributeValueRendered: A collection of product and product group descriptions in different languages. Contains 409,259 descriptions:
+
 \end{itemize}
 
 A snapshot of the visitor and behaviorData table can be seen in figure \ref{visitorTable} and \ref{behaviorTable}.
@@ -58,4 +62,194 @@ Row   & Document   & A No-SQL document can contain more complex datatype compare
 \end{tabular}
 \end{table}
 
-Python was used to accomplish the early migration from SQL tables to MongoDB.  
+Python was used to accomplish the early migration from SQL tables to MongoDB. Several scripts were created to retrieve the data from the SQL server and transfer it to the MongoDB database in the wanted format. Pseudo code of one of these scripts can be seen in algorithm \ref{alg:product}. \\
+
+%Shoud probably be in an appendix.
+
+\begin{algorithm}
+\caption{Product Script}
+\label{alg:product}
+\begin{algorithmic}[1]
+	\State SQLquery = SELECT * FROM struct.Product
+	\State  db = MongoDB
+	\ForAll{Rows r in SQLquery}
+	\State   Product = \{Id: r.id 
+	\State	\hspace{1cm}		Description: "" 
+	\State	\hspace{1cm}		Created: r.created 
+	\State	\hspace{1cm}	visitorID: [] 
+	\State \hspace{1cm}	ProductGroupId: 0 \}
+	\State db.insert(Product)
+	\EndFor
+	\\
+	\State Description = ""
+	\State	firstId = true
+	\State previousId = 0
+	\State previousGroupId = 0
+	\State SQLquery = SELECT * FROM struct.product JOIN struct.attributeValueRendered ON id ORDER BY productId desc
+	\ForAll{Rows r in SQLquery}
+	\State currentId = r.ProductId
+	\State currentGroupId = r.GroupId
+	\If{firstId}
+	\State previousId = currentId
+	\State firstId = false
+	\EndIf
+	\If{currentId != previousId}
+	\State db.update(\{id: previousId\},
+	\State \hspace{1cm} \$set: db.description: description
+		\State db.update(\{id: previousId\},
+	\State \hspace{1cm} \$set: db.ProductGroupId: previousGroupId
+	\State description = ""
+	\EndIf
+	\State description += r.description
+	\State previousId = currentId
+	\State previousgroupId = currentGroupId
+	\EndFor
+	\State VisitorIds = []
+	\State firstId = true
+	\State previousId = 0
+	\State SQLquery = SELECT * FROM struct.BehaviorData
+	\ForAll{Rows r in SQLquery}
+	\State currentId = r.Id
+	\If{firstId}
+	\State previousId = currentId
+	\State firstId = false
+	\EndIf
+	\If{currentId != previousId}
+	\State db.update(\{id: previousId\},
+	\State \hspace{1cm} \$set: db.VisitorId: visitorIds
+		\State db.update(\{id: previousId\},
+	\State visitorIds= []
+	\EndIf
+	\State visitorIds.append(r.UserId)
+	\State previousId = currentId
+	\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+After all the scripts are finished the No-SQL database has the collections Visitor and Product. A breakdown of documents in the two collections can be seen in table \ref{documents}	
+
+\begin{table}[H]
+\centering
+\caption{An overview of the fields in each document in the collections}
+\label{documents}
+\begin{tabular}{|l|l|p{7cm}|}
+\hline
+\textbf{Document} & \textbf{Fields}                                                                                                                          & \textbf{Comment}                                                                   \\ \hline
+Visitor           & \begin{tabular}[c]{@{}l@{}}Id: string\\ Behaviors: array\\ ProfileUID: string\\ CustomerUID: string\end{tabular}                         & The behavior array is an array of documents with the fields Type, Id and Timestamp. This contains all the behaviors of the specific visitor \\ \hline
+Product           & \begin{tabular}[c]{@{}l@{}}Id: int\\ ProductGroupId: int\\ VisitorId: stringArray\\ Description: string\\ Created: DateTime\end{tabular} &     The visitorId array contains Ids of all visitors who have looked at this product    \\ \hline
+\end{tabular}
+\end{table}
+
+After the data has been cleaned and structured in No-SQL the algorithm for determining product recommendations can be made. The algorithm is described in the following section.
+
+\section{The product recommendation algorithm}
+There are multiple ways to implement af product recommendation algorithm all with their advantages and disadvantages. The method chosen for this project is called Item-to-Item collaborative filtering. Other methods and the reasoning why these weren't chosen is described in further detail in Chapter 6 discussion. \\\\
+
+Item-to-Item collaborative filtering is a datamining tool to link items (products) with other items in terms of their similarity. This method is also the way \gls{Amazon} handles their product recommendations \cite{AmazonRecommendations}. \\
+The specifics of the algorithm differs from implementation to implementation. In this version each product is compared to other products based on how much they have been viewed together by customers, the likeness of their description and their product group. \\
+The first run of the algorithm requires going through each product and the visitors of each product to see what else they have looked at. This needs a lot of resources, but once run only new behavior has to be re-calculated. A run down of the algorithm can be seen in algorithm \ref{alg:collaborativeFilter}. \\\\
+
+\begin{algorithm}[H]
+\caption{Item-to-Item collaborative filtering algorithm}
+\label{alg:collaborativeFilter}
+\begin{algorithmic}[!H]
+\ForAll{Products p}
+\State productScores = Dictionary<int, double>
+\ForAll{Visitors in p}
+\ForAll{Products visitorProduct in Visitor behaviors}
+\If{productScores contains visitorProduct}
+\State productScores[visitorProduct]++
+\Else
+\State productScores.Add(visitorProduct, 1)
+\EndIf
+\EndFor
+\EndFor
+\State Sort productScores after highest value
+\ForAll{Products similarProduct in productScores}
+\State productScores[similarProduct] = \textbf{calculateSimilarityScore(p, similarProduct, productScores[similarProduct])} (see algorithm \ref{alg:calculateSimilarity})
+\EndFor
+\State Sort productScores after highest value
+\State Store top 10 productScores in database under p
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Similarity calculations for two products }
+\label{alg:calculateSimilarity}
+\begin{algorithmic}[!H]
+
+\State \textbf{calculateSimilarityScore(mainProduct p1, compareProduct p2, currentScore)}
+\State similarAttributeFactor = 0.02
+\State productGroupFactor = 0
+\State numOfSimAttributes = 0
+\If{p1.productGroup equals p2.productGroup}
+\State productGroupFactor = 0.02
+\EndIf
+\ForAll{words w in p1.description}
+\If{w is in p2.description}
+\State numOfSimAttributes++
+\EndIf
+\EndFor
+\If{numOfSimAttributes equals 0}
+\State similarAttributeFactor = 0
+\EndIf
+\State \textbf{return} \begin{math} currentScore * (1+productGroupFactor)*(1+similarAttributeFactor^{numOfSimAttributes}) \end{math}
+\end{algorithmic}
+\end{algorithm}
+
+
+After algorithms \ref{alg:collaborativeFilter} and \ref{alg:calculateSimilarity} each product in the database now has an array with the top 10 similar products based on amount of views, description and product group. \\
+Next up is calculating the top products for each visitor, these are the products the specific visitor has viewed the most. This is accomplished by iterating through each visitor, checking their behavior and storing their top products as a field in the database. This calculation can be seen in algorithm \ref{alg:topProducts}. This calculation also requires a large amount of resources the first time, but very little to maintain.
+
+\begin{algorithm}[H]
+\caption{Calculations of each visitors top products}
+\label{alg:topProducts}
+\begin{algorithmic}[H]
+\ForAll{Visitors v}
+\State visitorProducts = Dictionary<string, int>
+\ForAll{Behaviors b in v}
+\State topVistorProducts[b.Id]++
+\EndFor
+\State Sort visitorProducts after highest value
+\State Store top 5 visitorProducts in database under v
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+Since all these calculations are made before the actual product recommendations are requested, the process of recommending products is quite fast. The recommendation process starts with retrieving the requested visitor's top products from the database, retrieving these products top similar products, sorting them based on their score and finally returning the amount asked for. The code for the recommendation part can be seen in algorithm \ref{alg:recommendation}
+
+\begin{algorithm}[H]
+\caption{Get product recommendations}
+\label{alg:recommendation}
+\begin{algorithmic}[H]
+\State visitorTopProducts = db.GetTopProducts(visitorUID)
+\State productRecommendations = Dictionary<int, double>
+\ForAll{Products p in visitorTopProducts}
+\State SimilarProducts = db.GetTopProductRecommendation(product)
+\ForAll{products simProduct in similarProducts}
+\If{productRecommendations contains simProduct}
+\State productRecommendations[simProduct] += similarProducts[simProduct]
+\Else
+\State productRecommendations.add(simProduct, similarProducts[simProduct]
+\EndIf
+\EndFor
+\EndFor
+\State Sort productRecommendations after highest value
+\State \textbf{return} amount of productRecommendations requested
+\State 
+\end{algorithmic}
+\end{algorithm}
+
+The entire process of requesting product recommendation, running algorithm \ref{alg:recommendation} and returning them takes less than 40ms which is one of the non-functional requirements. \\\\
+Some other paths are required in certain situations such as when the visitor does not have any behavior or not enough behavior to satisfy the amount of recommendations requested. In these cases the remaining recommendations are filled from the top 20 most popular products in the last 30 days. The top 20 products are calculated by checking the timestamp and finding those in the last 30 days and then counting how many times each product was viewed. The top 20 products are stored in the database and can be calculated through an API call.
+
+\section{Hosting the API}
+An API can be hosted in several different ways, through many providers. This product recommendation API is hosted through Amazon WebServices in an \gls{EC2Instance} \cite{EC2}. To accomplish this the ASP.NET core project is built in a Docker container, the container is pushed to the Docker Hub and then pulled and run in the \gls{EC2Instance}. The database is similarly packed in a docker container and run in the \gls{EC2Instance}. The Docker containers have exposed ports to the rest of the internet and can be accessed via \gls{EC2Instance} public DNS or IP.
+
+
+
+			
+
+
+ 
