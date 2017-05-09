@@ -1,0 +1,69 @@
+% Chapter Template
+
+\chapter{Requirements} % Main chapter title
+
+\label{Chapter3} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Requirements engineering}
+The requirements of the project is categorized into functional and non-functional requirements. These requirements were derived from the original case given by Struct A/S (Appendix ??), continuously planned meetings with Struct A/S and our supervisor, and as a part of the constant research done during the progress of the project. \\
+The functionality of the final product is developed in order to fulfill the most important aspects of the case, and the occurred requirements from the client meetings.
+
+\subsection{Functional requirements} 
+The most important features of the system includes delivery of good quality product recommendation and handling of new data. This is very complex features and a lot of requirements must be fulfilled in, order to realize them. The most crucial functional requirements can be seen in table \ref{table:functionalrequirements}. These requirements has been the driving force throughout the project. For a complete list of functional requirements, see the git backlog [?].
+\begin{table}[]
+	\centering
+		\begin{tabular}{l|l}
+			\rowcolor[HTML]{96B1FF} 
+			\multicolumn{1}{c|}{\cellcolor[HTML]{96B1FF}F01} & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can provide tailored product recommendations to his customers.\\ When the API is provided with information about a visitor, tailored recommendations to the customer must be returned. If the data about the visitor is insufficient to calculate enough tailored recommendations, the most popular products within the last 30 days must be used to present enough recommendations.\end{tabular} \\
+			F02                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can store new behavior data for a visitor in the database. \\ When the API is provided with the required information, new behavior data must be stored in the database.\end{tabular}                                                                                                                                                                                                              \\
+			\rowcolor[HTML]{96B1FF} 
+			F03                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can store new behavior data for a product in the database. \\ When the API is provided with the required information, new behavior data must be stored in the database.\end{tabular}                                                                                                                                                                                                              \\
+			F04                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can store new product groups in the database. \\ When the API is provided with the required information, a new product group must be stored in the database.\end{tabular}                                                                                                                                                                                                                         \\
+			\rowcolor[HTML]{96B1FF} 
+			F05                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can store new visitors in the database.\\ When the API is provided with the required information, a new visitor must be stored in the database.\end{tabular}                                                                                                                                                                                                                                      \\
+			F06                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can store new products in the database.\\ When the API is provided with the required information, a new product must be stored in the database.\end{tabular}   
+			\\
+			\rowcolor[HTML]{96B1FF} 
+			F07                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can update existing product groups in the database.\\ When the API is provided with the required information, a product group should be updated.\end{tabular}   
+			\\
+			F08                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can update existing products in the database.\\ When the API is provided with the required information, a product should be updated.\end{tabular}        
+			\\
+			\rowcolor[HTML]{96B1FF} 
+			F09                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can update a visitor in the database.\\ When the API is provided with the required information, the visitor should be updated.\end{tabular}   
+			\\
+			F10                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can delete existing behavior in the database.\\ When the API is provided with the required information, behavior data should be deleted in order to keep the data up-to-date.\end{tabular}     
+			\\
+			\rowcolor[HTML]{96B1FF} 
+			F11                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can delete an existing visitor in the database.\\ When the API is provided with the required information, the visitor should be deleted in order to keep the data up-to-date.\end{tabular}     
+			\\
+			F12                                              & \begin{tabular}[c]{p{.9\textwidth}}The webshop developer can delete an existing product group in the database.\\ When the API is provided with the required information, the product group should be deleted in order to keep the data up-to-date.\end{tabular}                                                                                                                                                                                                                    
+		\end{tabular}%
+	\caption{Functional requirements}
+	\label{table:functionalrequirements}
+\end{table}
+
+As we can see from table \ref{table:functionalrequirements}, the functional requirements of the final product can be compressed into 12 requirements. This corresponds with the wish of a simple API, that provides good quality product recommendations. A lot of work has therefore been put into developing a complex and reliable algorithm that provides state of the art product recommendations. F01 was the most important requirement and has therefore acted as an ongoing task during the entire development of the product. F02-F06 was secondary requirements as they were not crucial before the recommendation algorithm was implemented. However, once the algorithm was applied to the system, requirement F02-F12 was needed in order to keep the data updated.
+
+\subsection{Non-functional requirements}
+The non-functional requirements was described at an early stage, and later clarified at the planned meetings. The functional requirements can be seen in table \ref{table:nonfunctionalrequirements}.
+
+\begin{table}[]
+	\centering
+	\begin{tabular}{l|l}
+		\rowcolor[HTML]{96B1FF} 
+		\multicolumn{1}{c|}{\cellcolor[HTML]{96B1FF}NF01} & \begin{tabular}[c]{p{.9\textwidth}}The API should be developed in C\# .NET core.\end{tabular} \\
+		NF02                                              & \begin{tabular}[c]{p{.9\textwidth}} Recommendations must be delivered within 40ms. \end{tabular}                                                                                                                                                                                                              \\
+		\rowcolor[HTML]{96B1FF} 
+		NF03                                              & \begin{tabular}[c]{p{.9\textwidth}}The data used for product recommendations should be stored in a fitting scalable No-SQL database. \end{tabular}                                                                                                                                                                                                              \\
+		NF04                                              & \begin{tabular}[c]{p{.9\textwidth}}The API should be easy accessible through a web service. \end{tabular}                                                                                                                                                                                                                                                                                                                                                                                                                                          
+	\end{tabular}%
+	\caption{Non-functional requirements}
+	\label{table:nonfunctionalrequirements}
+\end{table}
+
+The non-functional are few, but should out to be very challenging. NF01 was a choice made based on the fact that the platform Struct is developing on is based on C\#. .Net core was chosen because of its high performance and scalable systems, which was needed to realize NF02.\cite{NetCore}
+NF02 was probably the most challenging requirement to fulfill, however very important since you do not want your website to be slow. At the beginning Struct had a wish that the new database for recommendation data had to be scalable up to billions of records. Because of the denormalized data structure, it was agreed that a No-SQL database would be the right approach. This resulted in requirement NF03. In order to lower the amount of effort needed to integrate the recommendation system, the API had to easily accessible and the data output had to be in a standardized format. This resulted in requirement NF04.
