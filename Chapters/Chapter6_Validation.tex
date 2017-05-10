@@ -28,7 +28,7 @@ Validation of product recommendation engines is focused around two approaches \c
 \subsubsection{Offline validation}
 
 For offline evaluation measures such as Root-Mean-Square-Error (RMSE) and Mean-Absolute-Error (MAE) \cite{rmseAndmae} are often used. These measures requires user ratings on products which is not present in the data for this project. RMSE and MAE can therefore not be used to evaluate these product recommendation. \\
-Another offline method which is used is called Recall. This method functions by using a percentage of the data available as regular input data and another percentage as test data \cite{eval}. The Recall evaluation run in this project used 80 percent of the data as input and tested on the remaining 20 percent. More specifically the remaining 20 percent was used in the following way:
+Another offline method is called Recall. This method functions by using a percentage of the data available as regular input data and another percentage as test data \cite{eval}. The Recall evaluation run in this project used 80 percent of the data as input and tested on the remaining 20 percent. More specifically the remaining 20 percent was used in the following way:
 \begin{itemize}
 \item Take each visitor with more than two behaviors
 \item Input half of the visitor's behaviors via the API
