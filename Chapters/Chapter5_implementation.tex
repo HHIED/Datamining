@@ -17,9 +17,9 @@ The API consists of the commands seen in appendix \ref{APICommands}. \\\\
 This section covers the process from the initial data delivery to the final solution in a chronological order.
 
 \section{Initial data dump}
-In the beginning of the project we were supplied with data from one of \gls{Struct} customers. This data was in the form of many SQL tables and most of the data was not relevant for creating product recommendations. The main tables used were the following:  \\
+In the beginning of the project we were supplied with data from one of \gls{Struct}' customers. This data was in the form of many SQL tables and most of the data was not relevant for creating product recommendations. The main tables used were the following:  \\
 \begin{itemize}
-\item Visitor: A collection of every unique visitor who visited the customer's website, each visitor gets a unique identifier called UID. Contains 3,073,665  visitors.
+\item Visitor: A collection of every unique visitor who had visited the customer's website, each visitor gets a unique identifier called UID. Contains 3,073,665  visitors.
 \item Profile: A collection of every users signed up at the website. Contains 3037 profiles.
 \item BehaviorData: A collection of every unique action performed by visitors on the website, for example when a visitor views a product a new row is made with the visitor's UID, the product UID and the timestamp. Contains 3,326,736 visitor actions.
 \item Order: Contains each profile's orders. Contains 5520 orders.
