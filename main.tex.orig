@@ -48,18 +48,13 @@ headsepline, % Uncomment to get a line under the header
 \usepackage{wrapfig} %for wrapping images
 \usepackage{longtable} %for creating tables across several pages
 \usepackage{tabu} %for creating long tables
-<<<<<<< HEAD
-\usepackage[table]{xcolor}
+\usepackage{booktabs}
 \usepackage{lscape}
 \usepackage{seqsplit}
 \usepackage{graphicx}
-\usepackage{adjustbox}
-=======
-\usepackage{booktabs}
-\usepackage{graphicx}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{cleveref}
->>>>>>> 65a3a0a8ecf6d2fa1d59536cfd5e469dfa977d39
+\usepackage{adjustbox}
 
 
 
@@ -253,15 +248,17 @@ headsepline, % Uncomment to get a line under the header
 % Uncomment the lines as you write the chapters
 \include{Chapters/Chapter1_Introduction}
 \include{Chapters/chapter1_ProlemStatement}
-<<<<<<< HEAD
-\include{Chapters/Chapter5_implementation}
-\include{Chapters/Chapter6_Validation}
-%\include{Chapters/Requirements}
-%\include{Chapters/Chapter3}
-=======
+\include{Chapters/Chapter3_RelatedWork}
 \include{Chapters/Chapter3_Requirements}
 \include{Chapters/Chapter4_Design}
->>>>>>> 65a3a0a8ecf6d2fa1d59536cfd5e469dfa977d39
+\include{Chapters/Chapter5_implementation}
+\include{Chapters/Chapter6_Validation}
+<<<<<<< HEAD
+\include{Chapters/Chapter7_Discussion}
+=======
+\include{Chapters/Chapter8_Conclusion}
+\include{Chapters/Chapter9_futurework}
+>>>>>>> ba66852c2b0bb6872e214d69b67a8742b433e941
 %\include{Chapters/Chapter4}
 %\include{Chapters/Chapter5} 
 %\include{Chapters/Chapter6}
@@ -279,6 +276,7 @@ headsepline, % Uncomment to get a line under the header
 \begin{landscape}
 \input{Appendices/APICommands}
 \end{landscape}
+\input{Appendices/PythonAlg}
 %\input{Appendices/Process}
 %\input{Appendices/Testing}
 %\input{Appendices/Test-results}
