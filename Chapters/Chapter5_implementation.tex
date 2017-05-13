@@ -62,69 +62,7 @@ Row   & Document   & A No-SQL document can contain more complex datatype compare
 \end{tabular}
 \end{table}
 
-Python was used to accomplish the early migration from SQL tables to MongoDB. Several scripts were created to retrieve the data from the SQL server and transfer it to the MongoDB database in the wanted format. Pseudo code of one of these scripts can be seen in algorithm \ref{alg:product}. \\
-
-%Shoud probably be in an appendix.
-
-\begin{algorithm}
-\caption{Product Script}
-\label{alg:product}
-\begin{algorithmic}[1]
-	\State SQLquery = SELECT * FROM struct.Product
-	\State  db = MongoDB
-	\ForAll{Rows r in SQLquery}
-	\State   Product = \{Id: r.id 
-	\State	\hspace{1cm}		Description: "" 
-	\State	\hspace{1cm}		Created: r.created 
-	\State	\hspace{1cm}	visitorID: [] 
-	\State \hspace{1cm}	ProductGroupId: 0 \}
-	\State db.insert(Product)
-	\EndFor
-	\\
-	\State Description = ""
-	\State	firstId = true
-	\State previousId = 0
-	\State previousGroupId = 0
-	\State SQLquery = SELECT * FROM struct.product JOIN struct.attributeValueRendered ON id ORDER BY productId desc
-	\ForAll{Rows r in SQLquery}
-	\State currentId = r.ProductId
-	\State currentGroupId = r.GroupId
-	\If{firstId}
-	\State previousId = currentId
-	\State firstId = false
-	\EndIf
-	\If{currentId != previousId}
-	\State db.update(\{id: previousId\},
-	\State \hspace{1cm} \$set: db.description: description
-		\State db.update(\{id: previousId\},
-	\State \hspace{1cm} \$set: db.ProductGroupId: previousGroupId
-	\State description = ""
-	\EndIf
-	\State description += r.description
-	\State previousId = currentId
-	\State previousgroupId = currentGroupId
-	\EndFor
-	\State VisitorIds = []
-	\State firstId = true
-	\State previousId = 0
-	\State SQLquery = SELECT * FROM struct.BehaviorData
-	\ForAll{Rows r in SQLquery}
-	\State currentId = r.Id
-	\If{firstId}
-	\State previousId = currentId
-	\State firstId = false
-	\EndIf
-	\If{currentId != previousId}
-	\State db.update(\{id: previousId\},
-	\State \hspace{1cm} \$set: db.VisitorId: visitorIds
-		\State db.update(\{id: previousId\},
-	\State visitorIds= []
-	\EndIf
-	\State visitorIds.append(r.UserId)
-	\State previousId = currentId
-	\EndFor
-\end{algorithmic}
-\end{algorithm}
+Python was used to accomplish the early migration from SQL tables to MongoDB. Several scripts were created to retrieve the data from the SQL server and transfer it to the MongoDB database in the wanted format. Pseudo code of one of these scripts can be seen in appendix \ref{PythonScript}. \\
 
 After all the scripts are finished the No-SQL database has the collections Visitor and Product. A breakdown of documents in the two collections can be seen in table \ref{documents}	
 
@@ -135,10 +73,28 @@ After all the scripts are finished the No-SQL database has the collections Visit
 \begin{tabular}{|l|l|p{7cm}|}
 \hline
 \textbf{Document} & \textbf{Fields}                                                                                                                          & \textbf{Comment}                                                                   \\ \hline
-Visitor           & \begin{tabular}[c]{@{}l@{}}Id: string\\ Behaviors: array\\ ProfileUID: string\\ CustomerUID: string\end{tabular}                         & The behavior array is an array of documents with the fields Type, Id and Timestamp. This contains all the behaviors of the specific visitor \\ \hline
+Visitor           & \begin{tabular}[c]{@{}l@{}}Id: string\\ Behaviors: array\\ ProfileUID: string\\ CustomerUID: string\end{tabular}                         & The behavior array is an array of Behavior documents which contains all the behaviors of the specific visitor \\ \hline
 Product           & \begin{tabular}[c]{@{}l@{}}Id: int\\ ProductGroupId: int\\ VisitorId: stringArray\\ Description: string\\ Created: DateTime\end{tabular} &     The visitorId array contains Ids of all visitors who have looked at this product    \\ \hline
+Behavior & \begin{tabular}[c]{@{}l@{}}Type: string \\ Id: int \\ Timestamp: DateTime \end{tabular} & A behavior document holds information about a particular behavior \\ \hline
 \end{tabular}
 \end{table}
+
+An example of a Visitor and a Product document can be seen in figures \ref{visitorDoc} and \ref{productDoc}.
+\begin{figure}[H]
+\centering
+\includegraphics{visitorDocument}
+\caption{A Visitor document example}
+\label{visitorDoc}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics{productDocument}
+\caption{A Product document example}
+\label{productDoc}
+\end{figure}
+
+The topProducts array seen in figure \ref{productDoc} was not part of the original data transformation, but rather a part of the recommendation algorithm explanied later in this chapter.
 
 After the data has been cleaned and structured in No-SQL the algorithm for determining product recommendations can be made. The algorithm is described in the following section.
 
@@ -243,6 +199,9 @@ Since all these calculations are made before the actual product recommendations 
 
 The entire process of requesting product recommendation, running algorithm \ref{alg:recommendation} and returning them takes less than 40ms which is one of the non-functional requirements. \\\\
 Some other paths are required in certain situations such as when the visitor does not have any behavior or not enough behavior to satisfy the amount of recommendations requested. In these cases the remaining recommendations are filled from the top 20 most popular products in the last 30 days. The top 20 products are calculated by checking the timestamp and finding those in the last 30 days and then counting how many times each product was viewed. The top 20 products are stored in the database and can be calculated through an API call.
+
+\section{Handling new data}
+When new visitors are created or new behavior is discovered the client has to call the corresponding API functions in order to store this data alongside the other. When new behavior data is registered the program re-calculates the visitor in question''s top product as well as the product in question's similar products. This way the algorithm is always up to date and the calculations can happen asynchronously and thereby no affect the load times for the end user.
 
 \section{Hosting the API}
 An API can be hosted in several different ways, through many providers. This product recommendation API is hosted through Amazon WebServices in an \gls{EC2Instance} \cite{EC2}. To accomplish this the ASP.NET core project is built in a Docker container, the container is pushed to the Docker Hub and then pulled and run in the \gls{EC2Instance}. The database is similarly packed in a docker container and run in the \gls{EC2Instance}. The Docker containers have exposed ports to the rest of the internet and can be accessed via \gls{EC2Instance} public DNS or IP.

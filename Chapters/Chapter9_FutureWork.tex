@@ -1,0 +1,23 @@
+%!TEX root=../main.tex
+% Chapter Template
+
+\chapter{Future Work} % Main chapter title
+
+\label{Chapter9} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Future features}
+This section focuses on the work which was not a priority in the versions of the API. Some of these features have not been implemented due to the needs of the current customer, but could prove useful in the future. Other features have not been possible due to lacking data, such as feedback from actual users.
+
+\subsection{Remaining requirements}
+In the future the remaining requirements should be fulfilled, this will allow the companies using the API to update and delete their data if, for example, a  product is no longer in their catalog they will be able to remove it to prevent it from showing up in the recommendations. Deleting older behavior will also keep the recommendations more up to date if the consumer patterns shift.
+
+\subsection{Product ratings}
+The data structure could be changed to accommodate web shops with the possibility of users rating the products. This will also allow the algorithm to take the ratings into account to produce even more accurate product recommendations. Ratings on products also allows more test measures to be calculated, see chapter \ref{Chapter6}.
+
+\section{Feedback based improvement}
+When the API gets put into production and feedback starts to be generated from the users the algorithm can start to use this to improve the accuracy of the recommendations. For example if a user does not click on any of the recommendations the similarity function can be altered to try and remedy this. This can be further automated with the use of machine learning. A good machine learning implementation can make the algorithm learn from the generated feedback and automatically adjust some of the parameters to improve its own success rate.
+
