@@ -79,7 +79,7 @@ Behavior & \begin{tabular}[c]{@{}l@{}}Type: string \\ Id: int \\ Timestamp: Date
 \end{tabular}
 \end{table}
 
-An example of a Visitor and a Product document can be seen in figures \ref{visitorDoc} and \ref{productDoc}.
+An example of a Visitort document can be seen in figure \ref{visitorDoc} and an example of a Product document can be seen in appendix \ref{productDoc}.
 \begin{figure}[H]
 \centering
 \includegraphics{visitorDocument}
@@ -87,14 +87,7 @@ An example of a Visitor and a Product document can be seen in figures \ref{visit
 \label{visitorDoc}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics{productDocument}
-\caption{A Product document example}
-\label{productDoc}
-\end{figure}
-
-The topProducts array seen in figure \ref{productDoc} was not part of the original data transformation, but rather a part of the recommendation algorithm explanied later in this chapter.
+The topProducts array seen in appendix \ref{productDoc} was not part of the original data transformation, but rather a part of the recommendation algorithm explanied later in this chapter.
 
 After the data has been cleaned and structured in No-SQL the algorithm for determining product recommendations can be made. The algorithm is described in the following section.
 
@@ -197,11 +190,11 @@ Since all these calculations are made before the actual product recommendations 
 \end{algorithmic}
 \end{algorithm}
 
-The entire process of requesting product recommendation, running algorithm \ref{alg:recommendation} and returning them takes less than 40ms which is one of the non-functional requirements. \\\\
+The entire process of requesting product recommendation, running algorithm \ref{alg:recommendation} and returning them takes less than 40ms which satisfies the non-functional requirement NF02. \\\\
 Some other paths are required in certain situations such as when the visitor does not have any behavior or not enough behavior to satisfy the amount of recommendations requested. In these cases the remaining recommendations are filled from the top 20 most popular products in the last 30 days. The top 20 products are calculated by checking the timestamp and finding those in the last 30 days and then counting how many times each product was viewed. The top 20 products are stored in the database and can be calculated through an API call.
 
 \section{Handling new data}
-When new visitors are created or new behavior is discovered the client has to call the corresponding API functions in order to store this data alongside the other. When new behavior data is registered the program re-calculates the visitor in question''s top product as well as the product in question's similar products. This way the algorithm is always up to date and the calculations can happen asynchronously and thereby no affect the load times for the end user.
+When new visitors are created or new behavior is discovered the client has to call the corresponding API functions in order to store this data alongside the other. When new behavior data is registered the program re-calculates the visitor in question's top product as well as the product in question's similar products. This way the algorithm is always up to date and the calculations can happen asynchronously and thereby have no affect the load times for the end user.
 
 \section{Hosting the API}
 An API can be hosted in several different ways, through many providers. This product recommendation API is hosted through Amazon WebServices in an \gls{EC2Instance} \cite{EC2}. To accomplish this the ASP.NET core project is built in a Docker container, the container is pushed to the Docker Hub and then pulled and run in the \gls{EC2Instance}. The database is similarly packed in a docker container and run in the \gls{EC2Instance}. The Docker containers have exposed ports to the rest of the internet and can be accessed via \gls{EC2Instance} public DNS or IP.
