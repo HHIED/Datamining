@@ -44,12 +44,12 @@ This resulted in a total of 1,934 visitors tested. These visitors have 11,328 be
 \label{recallAccuracy}
 \end{figure}
 The percentage of how many times the recommendation engine would have predicted a visitors actual behavior is therefore \begin{math}2974/5664*100=52.5\%\end{math} the result of this evaluation as well as the scripts used can be found attached with the source code. \\
-The engine only had half of each visitors behavior to go on which could be only 1 behavior and still managed to guess correctly more than half of the time. The 47.5\% of the time the algorithm did not correctly guess the behavior does not mean that these were bad recommendations - the visitors might not have discovered these items themselves but as they were recommended they might have examined these as well. The percentage of correct behaviors guessed would be even higher if more product recommendations where requested in the test. \\
+The engine only had half of each visitors behavior as input which could be as low as 1 behavior and still managed to guess correctly more than half of the time. The 47.5\% of the time the algorithm did not correctly guess the behavior does not mean that these were bad recommendations - the visitors might not have discovered these items themselves but as they were recommended they might have examined these as well. The percentage of correct behaviors guessed would be even higher if more product recommendations were requested in the test. \\
 As the algorithm acquires more data on all visitors as well as the visitor requesting recommendations the predictions will become even more precise.
 
 \subsubsection{Online validation}
 When the recommendation algorithm is put into production several new and better ways of evaluating the system becomes available. As the visitors get recommendations their behavior is logged and it is therefore easy to see how many of the recommendations are actually used and adjust the algorithm thereafter.
-This adjustment can potentially be automatized by using machine learning.
+This adjustment can potentially be automatized by using machine learning - this is covered in more detail in Chapter /ref{Chapter9}.
 
 \subsection{Concrete examples}
 To give a better understanding of the recommendations given by the algorithm a few specific examples are given below. \\
@@ -74,7 +74,7 @@ and is recommended the following products:
 \item \textbf{34392:} Brandmand Sam 104 cm Fastelavnstøj
 \end{itemize}
 
-The visitor has already looked at some of the items recommended, but others he has not. As the recommendations size increases more new products to the visitor will appear. The recommendations seem valid since they are all "Brandmand Sam" stuff which is all he has looked at in the past. In the future the recommendation engine will be able to sort out his orders, but this has yet to be implemented. \\\\
+The visitor has looked at some of the items recommended, but others he has not. As the recommendations size increases more new products to the visitor will appear. The recommendations seem valid since they are all "Brandmand Sam" stuff which is all he has looked at in the past. In the future the recommendation engine will be able to sort out his orders, but this has yet to be implemented. \\\\
 
 Another \textbf{visitor 0036ECB4-F5AB-4B7C-824C-8D1C832CB65A} has looked at the following products:
 \begin{itemize}
@@ -92,7 +92,7 @@ and is recommended the following 5 products:
 \item \textbf{42841: }Maserati Trofeo Biler Scalextric C3388
 \end{itemize}
 
-These recommendations also look valid theme-wise as they relate closely to the products the visitor has viewed. \\\\
+These recommendations also look valid, theme-wise, as they relate closely to the products the visitor has viewed. \\\\
 
 A final example \textbf{visitor 22C9CF0F-8B96-4764-A2D1-6194992CEDC2} has looked at these products:
 \begin{itemize}
@@ -110,6 +110,6 @@ and is recommended these products:
 The two LEGO recommendations in this example might not seem thematically accurate, however since they have been recommended they must have a high similarity score to one or both of the products the visitor has looked at. A closer look at the data shows the two LEGO products to have similarity scores of 24 and 15 respectively to product 42106. Since these products are not in the same product group and have zero matching descriptions the high similarity score is the amount of times they have been looked at together with this product. The main product, product 42106, have been looked at by 9 other visitors and these 9 visitors have then looked at the first LEGO product 24 times and the second LEGO product 15 times.
 
 \section{Conclusion}
-The system has been validated statistically with the Recall method where the algorithm correctly predicted 52.5\% of the visitors' behavior which would be even higher if more recommendations were requested in the test.. Concrete examples have also been examined and the recommendations makes sense when looked at. A few other measures such as RMSE and MAE could not be used due to the lack of product rating from the visitors.
+The system has been validated statistically with the Recall method where the algorithm correctly predicted 52.5\% of the visitors' behavior which would be even higher if more recommendations were requested in the test.. Concrete examples have also been examined and the recommendations seem valid when looked at. A few other measures such as RMSE and MAE could not be used due to the lack of product ratings from the visitors.
 
  
