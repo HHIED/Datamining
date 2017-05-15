@@ -12,12 +12,12 @@
 \section{Solution overview}
 
 The final solution consists of a \gls{REST} API build with ASP.NET Core and a MongoDB \gls{NoSQL} database. Both are hosted through Amazon Webservices in an EC2 container using Docker. \\
-The API consists of the commands seen in appendix \ref{APICommands}. \\\\
+The API consists of the commands seen in appendix \ref{APICommands}. \\
 
 This section covers the process from the initial data delivery to the final solution in a chronological order.
 
 \section{Initial data dump}
-In the beginning of the project we were supplied with data from one of \gls{Struct}' customers. This data was in the form of many SQL tables and most of the data was not relevant for creating product recommendations. The main tables used were the following:  \\
+In the beginning of the project data from one of \gls{Struct}' customers was supplied. This data was in the form of many SQL tables and most of the data was not relevant for creating product recommendations. The main tables used were the following:  \\
 \begin{itemize}
 \item Visitor: A collection of every unique visitor who had visited the customer's website, each visitor gets a unique identifier called UID. Contains 3,073,665  visitors.
 \item Profile: A collection of every users signed up at the website. Contains 3037 profiles.
@@ -45,11 +45,11 @@ A snapshot of the visitor and behaviorData table can be seen in figure \ref{visi
 These tables contain all the pertinent information for creating product recommendations and can be utilized after a cleaning and structuring process. This process is described in the following sections.
 
 \section{The product recommendation algorithm}
-There are multiple ways to implement af product recommendation algorithm all with their advantages and disadvantages. The method chosen for this project is called Item-to-Item collaborative filtering. Other methods and the reasoning why these weren't chosen is described in further detail in Chapter 6 discussion. \\\\
+There are multiple ways to implement a product recommendation algorithm all with their advantages and disadvantages. The method chosen for this project is called Item-to-Item collaborative filtering. Other methods and the reasoning why these were not chosen is described in further detail in Chapter 6 discussion. \\\\
 
-Item-to-Item collaborative filtering is a datamining tool to link items (products) with other items in terms of their similarity. This method is also the way \gls{Amazon} handles their product recommendations \cite{AmazonRecommendations}. \\
+Item-to-Item collaborative filtering is a data mining method to link items (products) with other items in terms of their similarity. This method is also the way \gls{Amazon} handles their product recommendations \cite{AmazonRecommendations}. \\
 The specifics of the algorithm differs from implementation to implementation. In this version each product is compared to other products based on how much they have been viewed together by customers, the likeness of their description and their product group. \\
-The first run of the algorithm requires going through each product and the visitors of each product to see what else they have looked at. This needs a lot of resources, but once run only new behavior has to be re-calculated. A run down of the algorithm can be seen in algorithm \ref{alg:collaborativeFilter}. \\\\
+The first run of the algorithm requires going through each product and the visitors of each product to see what else they have looked at. This needs a lot of resources, but once run only new behavior has to be re-calculated. Pseudo code of the algorithm can be seen in algorithm \ref{alg:collaborativeFilter}. \\\\
 
 \begin{algorithm}[H]
 \caption{Item-to-Item collaborative filtering algorithm}
@@ -102,7 +102,7 @@ The first run of the algorithm requires going through each product and the visit
 
 
 After algorithms \ref{alg:collaborativeFilter} and \ref{alg:calculateSimilarity} each product in the database now has an array with the top 10 similar products based on amount of views, description and product group. \\
-Next up is calculating the top products for each visitor, these are the products the specific visitor has viewed the most. This is accomplished by iterating through each visitor, checking their behavior and storing their top products as a field in the database. This calculation can be seen in algorithm \ref{alg:topProducts}. This calculation also requires a large amount of resources the first time, but very little to maintain.
+The next step is calculating the top products for each visitor, these are the products the specific visitor has viewed the most. This is accomplished by iterating through each visitor, checking their behavior and storing their top products as a field in the database. This calculation can be seen in algorithm \ref{alg:topProducts}. This calculation also requires a large amount of resources the first time, but very little to maintain.
 
 \begin{algorithm}[H]
 \caption{Calculations of each visitors top products}
@@ -143,14 +143,14 @@ Since all these calculations are made before the actual product recommendations 
 \end{algorithmic}
 \end{algorithm}
 
-The entire process of requesting product recommendation, running algorithm \ref{alg:recommendation} and returning them takes less than 40ms which satisfies the non-functional requirement NF02. \\\\
+The entire process of requesting product recommendations, running algorithm \ref{alg:recommendation} and returning them takes less than 40ms which satisfies the non-functional requirement NF02. \\\\
 Some other paths are required in certain situations such as when the visitor does not have any behavior or not enough behavior to satisfy the amount of recommendations requested. In these cases the remaining recommendations are filled from the top 20 most popular products in the last 30 days. The top 20 products are calculated by checking the timestamp and finding those in the last 30 days and then counting how many times each product was viewed. The top 20 products are stored in the database and can be calculated through an API call.
 
 \section{Handling new data}
-When new visitors are created or new behavior is discovered the client has to call the corresponding API functions in order to store this data alongside the other. When new behavior data is registered the program re-calculates the visitor in question's top product as well as the product in question's similar products. This way the algorithm is always up to date and the calculations can happen asynchronously and thereby have no affect the load times for the end user.
+When new visitors are created or new behavior is discovered the client has to call the corresponding API functions in order to store this data alongside the other. When new behavior data is registered the program re-calculates the visitor's top product as well as the product's similar products. This way the algorithm is always up to date and the calculations can happen asynchronously and thereby have no affect the load times for the end user.
 
 \section{Hosting the API}
-An API can be hosted in several different ways, through many providers. This product recommendation API is hosted through Amazon WebServices in an \gls{EC2Instance} \cite{EC2}. To accomplish this the ASP.NET core project is built in a Docker container, the container is pushed to the Docker Hub and then pulled and run in the \gls{EC2Instance}. The database is similarly packed in a docker container and run in the \gls{EC2Instance}. The Docker containers have exposed ports to the rest of the internet and can be accessed via \gls{EC2Instance} public DNS or IP.
+This product recommendation API is hosted through Amazon WebServices in an \gls{EC2Instance} \cite{EC2}. To accomplish this the ASP.NET core project is built in a Docker container, the container is pushed to the Docker Hub and then pulled and run in the \gls{EC2Instance}. The database is similarly packed in a docker container and run in the \gls{EC2Instance}. The Docker containers have exposed ports to the rest of the internet and can be accessed via \gls{EC2Instance} public DNS or IP.
 
 
 
