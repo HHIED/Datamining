@@ -9,7 +9,7 @@
 %----------------------------------------------------------------------------------------
 
 \section{Conceptual overview of the system}
-The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC).\color{red} (find kilde, evt. wiki) \color{black} The system itself consists of the Model and Controller part, and lets the client be responsible for the view. In figure \ref{fig:MVC} it is shown how the system is layered. As mentioned, the client is responsible of the view, which in this case is the webshop. Data is sent to the API (Controller) which simply communicates the data to the logic (model) of the system. The logic (model) is responsible for communication with the database, calculations regarding product recommendations, and handling of new incoming data.
+The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC).\color{red} (find kilde, evt. wiki) \color{black} The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the webshop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the API (Controller) which simply communicates the data to the logic (model) of the system. The logic (model) is responsible for communication with the database, calculations regarding product recommendations, and handling new incoming data.
 
 \begin{figure}
 	\centering
@@ -19,8 +19,8 @@ The system is developed as a part of the classic architectural pattern, Model-Vi
 \end{figure}
 
 \subsection{Recommendation API (Controller)}
-The API is split into two Controller-classes, DataController and RecommendationController. If we take a look at figure \ref{fig:ControllerClasses}, the two controller-classes can be seen. The RecommendationController only consists of one API-call, however this is probably the most interesting call that can be made. Calling the GetRecommendationForVisitor-method with a visitor UID and the desired number of product recommendations will return a String-array consisting of product IDs, which the client can then use to present products in a desirable way to the end-user.\\
-The DataController is used for keeping the data in the database up-to-date. The three Put-methods allows the client to provide new visitor and behavior data to the database. The GetUpdate allow the client to initiate the build of the collaborative filter. Collaborative filtering will be discussed more thoroughly in \ref{Chapters/Chapter5_Implementation}. GetUpdateVisitorTopProducts() allows the client to initiate the calculations of each visitors most viewed products. At last, CalculateTop20() lets the client initiate the calculations of the most popular products in the last 30 days. All the update-methods is special administrator methods, and should only be accessible to few access-approved staff.
+The API is split into two Controller-classes, DataController and RecommendationController.The two controller classes can be seen in figure \ref{fig:ControllerClasses}. The RecommendationController only consists of one API-call, however this is probably the most interesting call. The GetRecommendationForVisitor-method is called with a visitor UID and the desired number of product recommendations. This will return a String-array consisting of product IDs, which the client can then use to present products in a desirable way to the end-user.\\
+The DataController is used for keeping the data in the database up-to-date. The three Put-methods allows the client to provide new visitor and behavior data to the database. The GetUpdate allow the client to initiate the build of the collaborative filter. Collaborative filtering will be discussed more thoroughly in \ref{Chapters/Chapter5_Implementation}. GetUpdateVisitorTopProducts() allows the client to initiate the calculations of each visitors most viewed products. At last, CalculateTop20() lets the client initiate the calculations of the most popular products in the last 30 days. All the update-methods are special administrator methods, and should only be accessible to few access-approved staff.
 
 \begin{figure}
 	\centering
@@ -40,7 +40,7 @@ The recommendation logic is where the main operations of the system takes place.
 \end{figure}
 
 \section{Client-Server}
-When put to use, the recommendation system will be distributed and play the server role in a Client-Server model. The system should be considered an application solely for providing product recommendations. This means we have a very thin client, as its only job is to ask for recommendations by sending very little information. In this scenario, the client is the webshop that needs to provide recommendations to one of its users. The client is also able to ask the server to update its database or store new content in the database, but the concept is the same and just as simple as the request for product recommendations. The Client-Server model of the system can be seen in figure \ref{fig:ClientServer}
+When put to use, the recommendation system will be distributed and play the server role in a Client-Server model. The system should be considered an application solely for providing product recommendations. In this scenario, the client is the webshop that needs to provide recommendations to one of its users. The client is also able to ask the server to update its database or store new content in the database, but the concept is the same and just as simple as the request for product recommendations. The Client-Server model of the system can be seen in figure \ref{fig:ClientServer}
 
 \begin{figure}
 	\centering
@@ -62,7 +62,7 @@ A brief overview of the different terminology for SQL and No-SQL is given in tab
 		\hline
 		\textbf{SQL}   & \textbf{No-SQL}     & \textbf{Comment}                                                                                                    \\ \hline
 		Table & Collection &                                                                                                            \\ \hline
-		Row   & Document   & A No-SQL document can contain more complex datatype compared to a row in SQL e.g arrays or other documents \\
+		Row   & Document   & A No-SQL document can contain more complex datatypes compared to a row in SQL e.g arrays or other documents \\
 		\hline
 	\end{tabular}
 \end{table}
