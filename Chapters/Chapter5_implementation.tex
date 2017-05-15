@@ -44,53 +44,6 @@ A snapshot of the visitor and behaviorData table can be seen in figure \ref{visi
 
 These tables contain all the pertinent information for creating product recommendations and can be utilized after a cleaning and structuring process. This process is described in the following sections.
 
-\section{Data Transformation}
-To begin the initial data transformation a data storing technology has to be selected. The technology chosen was \gls{NoSQL}, specifically \gls{MongoDB} the most popular No-SQL framework \cite{DBRankings}. \\
-\gls{NoSQL} is chosen because of the good fit for this project. The data demands are not clearly specified in the beginning and with No-SQL it is easy to add or remove data or even change the data types on the fly. No-SQL's denormalized format also allows for faster retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers and many engines have built in scaling functionalities \cite{SQLvsNOSQL} which can come in handy when multiple clients begin using the service. \\\\
-
-A brief overview of the different terminology for SQL and No-SQL is given in table \ref{sqlvsnosql_table}.
-\begin{table}[H]
-\centering
-\caption{SQL vs No-SQL terminology}
-\label{sqlvsnosql_table}
-\begin{tabular}{|l|l|p{8cm}|}
-\hline
-\textbf{SQL}   & \textbf{No-SQL}     & \textbf{Comment}                                                                                                    \\ \hline
-Table & Collection &                                                                                                            \\ \hline
-Row   & Document   & A No-SQL document can contain more complex datatype compared to a row in SQL e.g arrays or other documents \\
-\hline
-\end{tabular}
-\end{table}
-
-Python was used to accomplish the early migration from SQL tables to MongoDB. Several scripts were created to retrieve the data from the SQL server and transfer it to the MongoDB database in the wanted format. Pseudo code of one of these scripts can be seen in appendix \ref{PythonScript}. \\
-
-After all the scripts are finished the No-SQL database has the collections Visitor and Product. A breakdown of documents in the two collections can be seen in table \ref{documents}	
-
-\begin{table}[H]
-\centering
-\caption{An overview of the fields in each document in the collections}
-\label{documents}
-\begin{tabular}{|l|l|p{7cm}|}
-\hline
-\textbf{Document} & \textbf{Fields}                                                                                                                          & \textbf{Comment}                                                                   \\ \hline
-Visitor           & \begin{tabular}[c]{@{}l@{}}Id: string\\ Behaviors: array\\ ProfileUID: string\\ CustomerUID: string\end{tabular}                         & The behavior array is an array of Behavior documents which contains all the behaviors of the specific visitor \\ \hline
-Product           & \begin{tabular}[c]{@{}l@{}}Id: int\\ ProductGroupId: int\\ VisitorId: stringArray\\ Description: string\\ Created: DateTime\end{tabular} &     The visitorId array contains Ids of all visitors who have looked at this product    \\ \hline
-Behavior & \begin{tabular}[c]{@{}l@{}}Type: string \\ Id: int \\ Timestamp: DateTime \end{tabular} & A behavior document holds information about a particular behavior \\ \hline
-\end{tabular}
-\end{table}
-
-An example of a Visitort document can be seen in figure \ref{visitorDoc} and an example of a Product document can be seen in appendix \ref{productDoc}.
-\begin{figure}[H]
-\centering
-\includegraphics{visitorDocument}
-\caption{A Visitor document example}
-\label{visitorDoc}
-\end{figure}
-
-The topProducts array seen in appendix \ref{productDoc} was not part of the original data transformation, but rather a part of the recommendation algorithm explanied later in this chapter.
-
-After the data has been cleaned and structured in No-SQL the algorithm for determining product recommendations can be made. The algorithm is described in the following section.
-
 \section{The product recommendation algorithm}
 There are multiple ways to implement af product recommendation algorithm all with their advantages and disadvantages. The method chosen for this project is called Item-to-Item collaborative filtering. Other methods and the reasoning why these weren't chosen is described in further detail in Chapter 6 discussion. \\\\
 
