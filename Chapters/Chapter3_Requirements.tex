@@ -9,11 +9,11 @@
 %----------------------------------------------------------------------------------------
 
 \section{Requirements engineering}
-The requirements of the project are categorized into functional and non-functional requirements. These requirements were derived from the original case given by Struct A/S (Appendix ??), continuously planned meetings with Struct A/S and our supervisor, and as a part of the constant research done during the progress of the project. \\
-The final product's functionality fulfills the most important important aspects of the case, and the requirements derived from the client meetings.
+The requirements of the project are categorized into functional and non-functional requirements. These requirements were derived from the original case given by Struct A/S (Appendix \ref{Case}), continuously planned meetings with Struct A/S and our supervisor, and as a part of the constant research done during the progress of the project. \\
+The final product's functionality fulfills the most important aspects of the case, and the requirements derived from the client meetings.
 
 \subsection{Functional requirements} 
-The most important features of the system includes delivery of good quality product recommendation and handling of new data. These are very complex features and a lot of requirements must be fulfilled in, order to realize them. The most crucial functional requirements can be seen in table \ref{table:functionalrequirements}. These requirements have been the driving force throughout the project. For a complete list of functional requirements, see the git backlog [?].
+The most important features of the system includes delivery of good quality product recommendation and handling of new data. These are very complex features and a lot of requirements must be fulfilled in, order to realize them. The most crucial functional requirements can be seen in table \ref{table:functionalrequirements}. These requirements have been the driving force throughout the project. For a complete list of functional requirements, see the git backlog \cite{ProductBacklog}.
 \begin{table}[]
 	\centering
 		\begin{tabular}{l|l}
@@ -54,10 +54,10 @@ The most important features of the system includes delivery of good quality prod
 	\label{table:functionalrequirements}
 \end{table}
 
-As we can see from table \ref{table:functionalrequirements}, the functional requirements of the final product can be compressed into 12 requirements. This corresponds with the wish of a simple API, that provides good quality product recommendations. A lot of work has therefore been put into developing a complex and reliable algorithm that provides state of the art product recommendations. F01 was the most important requirement and has therefore acted as an ongoing task during the entire development of the product. F02-F06 was secondary requirements as they were not crucial before the recommendation algorithm was implemented. However, once the algorithm was applied to the system, requirement F02-F12 was needed in order to keep the data updated.
+As we can see from table \ref{table:functionalrequirements}, the functional requirements of the final product can be compressed into 15 requirements. This corresponds with the wish of a simple API, that provides good quality product recommendations. A lot of work has therefore been put into developing a complex and reliable algorithm that provides state of the art product recommendations. F01 - \textit{provide recommendations} was the most important requirement and has therefore acted as an ongoing task during the entire development of the product. F02-F15 were secondary requirements as they were not crucial before the recommendation algorithm was implemented. However, once the algorithm was applied to the system, these requirements were needed in order to keep the data updated.
 
 \subsection{Non-functional requirements}
-The non-functional requirements were described at an early stage, and later clarified at the planned meetings. The functional requirements can be seen in table \ref{table:nonfunctionalrequirements}.
+The non-functional requirements were described at an early stage, and later clarified at the planned meetings. The non-functional requirements can be seen in table \ref{table:nonfunctionalrequirements}.
 
 \begin{table}[]
 	\centering
@@ -73,5 +73,5 @@ The non-functional requirements were described at an early stage, and later clar
 	\label{table:nonfunctionalrequirements}
 \end{table}
 
-The non-functional requirements are few, but turns out to be very challenging. The platform Struct use as the main tool for developing is based on programming language C\#. As a result of this, NF01 was derived. Net core was chosen because of its high performance and scalable systems, which was needed to realize NF02.\cite{NetCore}
-NF02 was probably the most challenging requirement to fulfill, however very important since you do not want your website to be slow. At the beginning Struct had a wish that the new database for recommendation data had to be scalable up to billions of records. Because of the denormalized data structure, it was agreed that a No-SQL database would be the right approach. This resulted in requirement NF03. In order to lower the amount of effort needed to integrate the recommendation system, the API had to easily accessible and the data output had to be in a standardized format. This resulted in requirement NF04.
+The non-functional requirements are few, but turns out to be very challenging. The platform Struct use as the main tool for developing is based on the programming language C\#. As a result of this, NF01 was derived. Net core was chosen because of its high performance and scalable systems, which was needed to realize NF02 - \textit{Recommendations must be delivered within 40ms}.\cite{NetCore}
+NF02 was probably the most challenging requirement to fulfill, however very important since you do not want your website to be slow. At the beginning Struct had a wish that the new database for recommendation data had to be scalable up to billions of records. Because of the denormalized data structure, it was agreed that a No-SQL database would be the right approach \cite{NoSQLScalability}. This resulted in requirement NF03 - \textit{Data should be stored in a scalable No-SQL database}. In order to lower the amount of effort needed to integrate the recommendation system, the API had to easily accessible and the data output had to be in a standardized format. This resulted in requirement NF04 - \textit{The API should be easy accessible through a web service}.
