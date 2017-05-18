@@ -73,6 +73,10 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage{verbatim}
 
+\usepackage{titlesec}
+
+\titleformat{\chapter}{\normalfont\huge}{\thechapter.}{20pt}{\huge\bf}
+
 \nocite{*}
 
 %%USED TO DISPLAY CODE
@@ -173,7 +177,7 @@ headsepline, % Uncomment to get a line under the header
 {\supname} % Supervisor name - remove the \href bracket to remove the link  
 \end{flushright}
 \end{minipage}\\[3cm]
-\includegraphics{SDU-Logo} % University/department logo - uncomment to place it
+\includegraphics{SDU-Logo}\\ % University/department logo - uncomment to place it
 \large \textit{A report submitted in fulfillment of the requirements\\  of \degreename}\\[0.3cm] % University requirement text
 \textit{at}\\[0.4cm]
 \univname\\\deptname\\[2cm] % Research group name and department name
@@ -220,6 +224,7 @@ headsepline, % Uncomment to get a line under the header
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------
 
+\setcounter{tocdepth}{1}
 \tableofcontents % Prints the main table of contents
 \clearpage
 
@@ -276,7 +281,7 @@ headsepline, % Uncomment to get a line under the header
 \input{Appendices/PythonAlg}
 \input{Appendices/productDoc}
 \input{Appendices/Process}
-%\input{Appendices/Testing}
+\input{Appendices/Case}
 %\input{Appendices/Test-results}
 %\input{Appendices/Tidslinje}
 % Include the appendices of the thesis as separate files from the Appendices folder

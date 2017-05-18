@@ -49,7 +49,7 @@ As the algorithm acquires more data on all visitors as well as the visitor reque
 
 \subsubsection{Online validation}
 When the recommendation algorithm is put into production several new and better ways of evaluating the system becomes available. As the visitors get recommendations their behavior is logged and it is therefore easy to see how many of the recommendations are actually used and adjust the algorithm thereafter.
-This adjustment can potentially be automatized by using machine learning - this is covered in more detail in Chapter /ref{Chapter9}.
+This adjustment can potentially be automated by using machine learning - this is covered in more detail in chapter \ref{Chapter9}.
 
 \subsection{Concrete examples}
 To give a better understanding of the recommendations given by the algorithm a few specific examples are given below. \\
@@ -108,8 +108,5 @@ and is recommended these products:
 \item \textbf{43713:} Fastelavnstøj Tid til at ringe efter politiet og Paw Patrols hund nummer 1
 \end{itemize}
 The two LEGO recommendations in this example might not seem thematically accurate, however since they have been recommended they must have a high similarity score to one or both of the products the visitor has looked at. A closer look at the data shows the two LEGO products to have similarity scores of 24 and 15 respectively to product 42106. Since these products are not in the same product group and have zero matching descriptions the high similarity score is the amount of times they have been looked at together with this product. The main product, product 42106, have been looked at by 9 other visitors and these 9 visitors have then looked at the first LEGO product 24 times and the second LEGO product 15 times.
-
-\section{Conclusion}
-The system has been validated statistically with the Recall method where the algorithm correctly predicted 52.5\% of the visitors' behavior which would be even higher if more recommendations were requested in the test.. Concrete examples have also been examined and the recommendations seem valid when looked at. A few other measures such as RMSE and MAE could not be used due to the lack of product ratings from the visitors.
 
  
