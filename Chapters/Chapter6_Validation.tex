@@ -9,6 +9,42 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
+\section{Validation of the code}
+The code is validated through a series of integration tests. These tests test the methods of the two controllers including edge cases. An overview of the tast cases can be seen in table \ref{testCases}.
+
+\begin{table}[H]
+\centering
+\caption{Integration test cases}
+\label{testCases}
+\begin{tabular}{|p{6cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Method}             & \textbf{Test Case}                                             & \textbf{Expected Result}           \\ \hline
+GetRecommendationForVisitor & Valid arguments                                                & String array of size 5             \\ \hline
+GetRecommendationForVisitor & Non existing visitor                                           & String array of size 5             \\ \hline
+GetRecommendationForVisitor & Uppercase/lowercase visitorUID                                 & String array of size 5             \\ \hline
+GetRecommendationForVisitor & Uppercase/lowercase database                                   & String array of size 5             \\ \hline
+GetRecommendationForVisitor & Number of recommendations being larger than available products & String array of all valid products \\ \hline
+GetRecommendationForVisitor & Visitor with no behavior                                       & String array of size 5             \\ \hline
+GetRecommendationForVisitor & Non existing database                                          & Empty string array                 \\ \hline
+PutVisitor                  & New visitor                                                    & Visitor exists in database         \\ \hline
+PutVisitor                  & Existing visitor                                               & Runs without exceptions            \\ \hline
+PutVisitor                  & Non existing database                                          & Runs without exceptions            \\ \hline
+PutProduct                  & New product                                                    & Product exists in database         \\ \hline
+PutProduct                  & Existing product                                               & Runs without exceptions            \\ \hline
+PutProduct                  & Non existing database                                          & Runs without exceptions            \\ \hline
+PutBehavior                 & New behavior                                                   & behavior exists on visitor         \\ \hline
+PutBehavior                 & Non existing database                                          & Runs without exceptions            \\ \hline
+\end{tabular}
+\end{table}
+
+At the time of writing all tests runs successfully and a result overview can be seen in figure \ref{testResult}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.8]{testResults}
+\caption{Result of all integration tests}
+\label{testResult}
+\end{figure}
+
 \section{Validation of recommendations}
 
 This section takes two approaches to validating the implemented recommendation engine:
