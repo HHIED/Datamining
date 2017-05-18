@@ -1,3 +1,4 @@
+%!TEX root=../main.tex
 % Chapter Template
 
 \chapter{Design} % Main chapter title
@@ -9,9 +10,9 @@
 %----------------------------------------------------------------------------------------
 
 \section{Conceptual overview of the system}
-The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC).\color{red} (find kilde, evt. wiki) \color{black} The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the webshop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the API (Controller) which simply communicates the data to the logic (model) of the system. The logic (model) is responsible for communication with the database, calculations regarding product recommendations, and handling new incoming data.
+The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC) \ref{PatternsOfEnterprise}. The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the web shop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the controller which simply communicates the data between the logic (model) of the system and the view. The logic (model) is responsible for communication with the database, calculations regarding product recommendations, and handling new incoming data. The persistance layer is part of the model as described in \cite{PatternsOfEnterprise}  \textit{"When you're working with a model you are thinking about business policies, perhaps database interactions."}.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.4\linewidth]{Figures/MVC.png}
 	\caption{The Model-View-Controller (MVC) pattern applied on the system}
@@ -19,20 +20,15 @@ The system is developed as a part of the classic architectural pattern, Model-Vi
 \end{figure}
 
 \subsection{Recommendation API (Controller)}
-The API is split into two Controller-classes, DataController and RecommendationController.The two controller classes can be seen in figure \ref{fig:ControllerClasses}. The RecommendationController only consists of one API-call, however this is probably the most interesting call. The GetRecommendationForVisitor-method is called with a visitor UID and the desired number of product recommendations. This will return a String-array consisting of product IDs, which the client can then use to present products in a desirable way to the end-user.\\
-The DataController is used for keeping the data in the database up-to-date. The three Put-methods allows the client to provide new visitor and behavior data to the database. The GetUpdate allow the client to initiate the build of the collaborative filter. Collaborative filtering will be discussed more thoroughly in \ref{Chapters/Chapter5_Implementation}. GetUpdateVisitorTopProducts() allows the client to initiate the calculations of each visitors most viewed products. At last, CalculateTop20() lets the client initiate the calculations of the most popular products in the last 30 days. All the update-methods are special administrator methods, and should only be accessible to few access-approved staff.
+The recommendation system is designed according to the MVC pattern described above. The controller layer takes input from the user (the web shop) and passes the information to the model layer. The model layer consists of the objects seen in the domain model in Chapter \ref{analysis} as well as classes for handling the business logic and persistence. The different layers communicate through interfaces in order to be able to substitute implementations in the future. \\
+The controller layer is split into two classes, one for handling when the user requests recommendations which relates to functional requirement NF01 and another for handling the data coming from the web shops relating to functional requirements F02-F15.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=.6\linewidth]{Figures/ControllerClasses.png}
-	\caption{The two controller-classes in the recommendation API.}
-	\label{fig:ControllerClasses}
-\end{figure}
 
 \subsection{Recommendation logic (Model)}
-The recommendation logic is where the main operations of the system takes place. The model layer consists of five packages, and is made accessible to the controller layer through three interfaces. A package diagram of the layer can be seen in figure \ref{fig:PackageDiagram}. All classes used for calculations are placed in the Business package. This is where the product recommendations are calculated before being sent back to the control layer. This is also the package where any offline-calculation is made before it is stored in the database. The persistence package handles all information that needs to be communicated with the database. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in the \ref{Chapters/Chapter5_Implementation}.
+The recommendation logic is where the main operations of the system takes place. The model layer consists of five packages, and is made accessible to the controller layer through three interfaces. All classes used for calculations are placed in the Business package. This is where the product recommendations are calculated before being sent back to the control layer. This is also the package where any offline-calculation is made before it is stored in the database. The persistence package handles all information that needs to be communicated with the database. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Chapter5}. \\
+A package diagram of the Controller and Model layer can be seen in figure \ref{fig:PackageDiagram}
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.8\linewidth]{Figures/PackageDiagram.png}
 	\caption{Package diagram of the model layer}
@@ -40,9 +36,9 @@ The recommendation logic is where the main operations of the system takes place.
 \end{figure}
 
 \section{Client-Server}
-When put to use, the recommendation system will be distributed and play the server role in a Client-Server model. The system should be considered an application solely for providing product recommendations. In this scenario, the client is the webshop that needs to provide recommendations to one of its users. The client is also able to ask the server to update its database or store new content in the database, but the concept is the same and just as simple as the request for product recommendations. The Client-Server model of the system can be seen in figure \ref{fig:ClientServer}
+When put to use, the recommendation system will be distributed and play the server role in a Client-Server model. The system should be considered an application solely for providing product recommendations. In this scenario, the client is the web shop that needs to provide recommendations to one of its users. The client is also able to ask the server to update its database or store new content in the database, but the concept is the same and just as simple as the request for product recommendations. The Client-Server model of the system can be seen in figure \ref{fig:ClientServer}
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.8\linewidth]{Figures/ClientServer.png}
 	\caption{Package diagram of the model layer}
@@ -50,8 +46,8 @@ When put to use, the recommendation system will be distributed and play the serv
 \end{figure}
 
 \section{Database design}
-Specific requirements for the storage of data was set by Struct, as they wanted a largely scalable structure of the data. The technology chosen was \gls{NoSQL}, specifically \gls{MongoDB} the most popular No-SQL framework \cite{DBRankings}. \\
-\gls{NoSQL} is chosen because of the good fit for this project. The data demands are not clearly specified in the beginning and with No-SQL it is easy to add or remove data or even change the data types on the fly. No-SQL's denormalized format also allows for faster retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers and many engines have built in scaling functionalities \cite{SQLvsNOSQL} which can come in handy when multiple clients begin using the service. \\\\
+Specific requirements for the storage of data was set by Struct, as they wanted a largely scalable structure of the data. The technology chosen was \gls{NoSQL}.
+The data demands are not clearly specified in the beginning and with No-SQL it is easy to add or remove data or even change the data types on the fly whereas traditional relational databases have very strict data requirements, this also means that all data restrictions have to be handled in the code. No-SQL's denormalized format also allows for faster retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers and many engines have built in scaling functionalities \cite{SQLvsNOSQL} which can come in handy when multiple clients begin using the service. A downside of No-SQL compared to relational databases is the fact it does not focus much on Online Transaction Processing (OLTP) which means there is no guarantee that the data is always stored completely. Overall No-SQL is a good fit for this project since scalability and speed is imperative. \\\\
 
 A brief overview of the different terminology for SQL and No-SQL is given in table \ref{sqlvsnosql_table}.
 \begin{table}[H]
@@ -67,9 +63,7 @@ A brief overview of the different terminology for SQL and No-SQL is given in tab
 	\end{tabular}
 \end{table}
 
-Python was used to accomplish the early migration from SQL tables to MongoDB. Several scripts were created to retrieve the data from the SQL server and transfer it to the MongoDB database in the wanted format. Pseudo code of one of these scripts can be seen in appendix \ref{PythonScript}. \\
-
-After all the scripts are finished the No-SQL database has the collections Visitor and Product. A breakdown of documents in the two collections can be seen in table \ref{documents}	
+The database design mimics the domain model by representing real world concepts such as a Visitors and their Behavior and Products. The No-SQL design can be seen in figure \ref{documents}.
 
 \begin{table}[H]
 	\centering
@@ -92,6 +86,4 @@ An example of a Visitort document can be seen in figure \ref{visitorDoc} and an 
 	\label{visitorDoc}
 \end{figure}
 
-The topProducts array seen in appendix \ref{productDoc} was not part of the original data transformation, but rather a part of the recommendation algorithm explanied later in this chapter.
-
-After the data has been cleaned and structured in No-SQL the algorithm for determining product recommendations can be made. The algorithm is described in the following section.
+The topProducts array seen in Appendix \ref{productDoc} was not part of the original data transformation, but rather a part of the recommendation algorithm explained in Chapter \ref{Chapter5}.
