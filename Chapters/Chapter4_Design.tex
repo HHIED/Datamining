@@ -10,7 +10,8 @@
 %----------------------------------------------------------------------------------------
 
 \section{Conceptual overview of the system}
-The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC) \ref{PatternsOfEnterprise}. The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the web shop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the controller which simply communicates the data between the logic (model) of the system and the view. The logic (model) is responsible for communication with the database, calculations regarding product recommendations, and handling new incoming data. The persistance layer is part of the model as described in \cite{PatternsOfEnterprise}  \textit{"When you're working with a model you are thinking about business policies, perhaps database interactions."}.
+The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC) \ref{PatternsOfEnterprise}. The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the web shop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the controller which simply communicates the data between the logic (model) of the system and the view. The logic (model) handles the data, instantiates objects and does calculations regarding product recommendations. \\
+Apart from the MVC pattern the system has a persistence layer responsible for interactions with the database. The different layers communicate through interfaces in order to be able to substitute implementations in the future. 
 
 \begin{figure}[H]
 	\centering
@@ -20,13 +21,12 @@ The system is developed as a part of the classic architectural pattern, Model-Vi
 \end{figure}
 
 \subsection{Recommendation API (Controller)}
-The recommendation system is designed according to the MVC pattern described above. The controller layer takes input from the user (the web shop) and passes the information to the model layer. The model layer consists of the objects seen in the domain model in Chapter \ref{analysis} as well as classes for handling the business logic and persistence. The different layers communicate through interfaces in order to be able to substitute implementations in the future. \\
-The controller layer is split into two classes, one for handling when the user requests recommendations which relates to functional requirement NF01 and another for handling the data coming from the web shops relating to functional requirements F02-F15.
+The recommendation system is designed according to the MVC pattern described above. The controller layer takes input from the user (the web shop) and passes the information to the model layer. The controller layer is split into two classes, one for handling when the user requests recommendations which relates to functional requirement F01 and another for handling the data coming from the web shops relating to functional requirements F02-F15.
 
 
 \subsection{Recommendation logic (Model)}
-The recommendation logic is where the main operations of the system takes place. The model layer consists of five packages, and is made accessible to the controller layer through three interfaces. All classes used for calculations are placed in the Business package. This is where the product recommendations are calculated before being sent back to the control layer. This is also the package where any offline-calculation is made before it is stored in the database. The persistence package handles all information that needs to be communicated with the database. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Chapter5}. \\
-A package diagram of the Controller and Model layer can be seen in figure \ref{fig:PackageDiagram}
+The recommendation logic is where the main operations of the system takes place. The model layer consists of five packages, and is made accessible to the controller layer through three interfaces. This layer consists of the entities seen in the domain model in Chapter \ref{analysis} as well as classes for handling the business logic. \\. This is where the product recommendations are calculated before being sent back to the controller layer. This is also the package where any offline-calculation is made before it is stored in the database. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Chapter5}. \\
+A package diagram of the Controller and Model layer as well as the persistence layer can be seen in figure \ref{fig:PackageDiagram}
 
 \begin{figure}[H]
 	\centering
@@ -58,7 +58,7 @@ A brief overview of the different terminology for SQL and No-SQL is given in tab
 		\hline
 		\textbf{SQL}   & \textbf{No-SQL}     & \textbf{Comment}                                                                                                    \\ \hline
 		Table & Collection &                                                                                                            \\ \hline
-		Row   & Document   & A No-SQL document can contain more complex datatypes compared to a row in SQL e.g arrays or other documents \\
+		Row   & Document   & A No-SQL document can contain more complex data types compared to a row in SQL e.g arrays or other documents \\
 		\hline
 	\end{tabular}
 \end{table}
