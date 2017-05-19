@@ -23,7 +23,6 @@ Apart from the MVC pattern the system has a persistence layer responsible for in
 \subsection{Recommendation API (Controller)}
 The recommendation system is designed according to the MVC pattern described above. The controller layer takes input from the user (the web shop) and passes the information to the model layer. The controller layer is split into two classes, one for handling when the user requests recommendations which relates to functional requirement F01 and another for handling the data coming from the web shops relating to functional requirements F02-F15.
 
-
 \subsection{Recommendation logic (Model)}
 The recommendation logic is where the main operations of the system takes place. The model layer consists of five packages, and is made accessible to the controller layer through three interfaces. This layer consists of the entities seen in the domain model in Chapter \ref{analysis} as well as classes for handling the business logic. \\. This is where the product recommendations are calculated before being sent back to the controller layer. This is also the package where any offline-calculation is made before it is stored in the database. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Chapter5}. \\
 A package diagram of the Controller and Model layer as well as the persistence layer can be seen in figure \ref{fig:PackageDiagram}
@@ -44,6 +43,18 @@ When put to use, the recommendation system will be distributed and play the serv
 	\caption{Package diagram of the model layer}
 	\label{fig:ClientServer}
 \end{figure}
+
+\section{RESTfull}
+To accomplish the requirement NF04 of the services being accessible as a web service a RESTfull architectural style can be used. RESTfull makes use of HTTP methodologies to present GET, POST, PUT and DELETE methods for communication. REST is preferred over SOAP because it leverages less bandwidth \cite{restfull}. \\
+REST is an acronym for REpresentational State Transfer and consists of five guiding constraints \cite{rest}:
+\begin{description}
+\item [Client-Server] By separating the concerns of user interface and data storage/manipulation we improve the portability of the user interface.
+\item [Stateless] The server shall hold no state information about the client between requests.
+\item [Cacheable] Responses shall be cacheable by the client.
+\item [Uniform interface] The server shall present a uniform interface for interactions.
+\item [Layered system] The system shall be layered.
+\end{description}
+
 
 \section{Database design}
 Specific requirements for the storage of data was set by Struct, as they wanted a largely scalable structure of the data. The technology chosen was \gls{NoSQL}.
