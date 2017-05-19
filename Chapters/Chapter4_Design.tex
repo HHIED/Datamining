@@ -10,7 +10,7 @@
 %----------------------------------------------------------------------------------------
 
 \section{Conceptual overview of the system}
-The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC) \ref{PatternsOfEnterprise}. The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the web shop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the controller which simply communicates the data between the logic (model) of the system and the view. The logic (model) handles the data, instantiates objects and does calculations regarding product recommendations. \\
+The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC) \cite{PatternsOfEnterprise}. The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the web shop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the controller which simply communicates the data between the logic (model) of the system and the view. The logic (model) handles the data, instantiates objects and does calculations regarding product recommendations. \\
 Apart from the MVC pattern the system has a persistence layer responsible for interactions with the database. The different layers communicate through interfaces in order to be able to substitute implementations in the future. 
 
 \begin{figure}[H]
@@ -83,9 +83,9 @@ The database design mimics the domain model by representing real world concepts 
 	\begin{tabular}{|l|l|p{7cm}|}
 		\hline
 		\textbf{Document} & \textbf{Fields}                                                                                                                          & \textbf{Comment}                                                                   \\ \hline
-		Visitor           & \begin{tabular}[c]{@{}l@{}}Id: string\\ Behaviors: array\\ ProfileUID: string\\ CustomerUID: string\end{tabular}                         & The behavior array is an array of Behavior documents which contains all the behaviors of the specific visitor \\ \hline
-		Product           & \begin{tabular}[c]{@{}l@{}}Id: int\\ ProductGroupId: int\\ VisitorId: stringArray\\ Description: string\\ Created: DateTime\end{tabular} &     The visitorId array contains Ids of all visitors who have looked at this product    \\ \hline
-		Behavior & \begin{tabular}[c]{@{}l@{}}Type: string \\ Id: int \\ Timestamp: DateTime \end{tabular} & A behavior document holds information about a particular behavior \\ \hline
+		Visitor           & \begin{tabular}[c]{@{}l@{}}Id\\ Behaviors\\ ProfileUID\\ CustomerUID\end{tabular}                         & The behavior array is an array of Behavior documents which contains all the behaviors of the specific visitor \\ \hline
+		Product           & \begin{tabular}[c]{@{}l@{}}Id\\ ProductGroupId\\ VisitorId\\ Description\\ Created\end{tabular} &     The visitorId array contains Ids of all visitors who have looked at this product    \\ \hline
+		Behavior & \begin{tabular}[c]{@{}l@{}}Type \\ Id \\ Timestamp \end{tabular} & A behavior document holds information about a particular behavior \\ \hline
 	\end{tabular}
 \end{table}
 

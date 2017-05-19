@@ -87,12 +87,12 @@ The recall percentages is calculated as \begin{math}2974/5664*100=52.5\%\end{mat
 The Recall and Precision rates are visualized in figure \ref{recallAccuracy}. The result of this evaluation as well as the scripts used can be found attached with the source code. \\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.8]{recallAccuracy}
+\includegraphics[scale=0.7]{recallAccuracy}
 \caption{Recall accuracy}
 \label{recallAccuracy}
 \end{figure}
 The engine only had half of each visitors behavior as input which could be as low as 1 behavior and still managed to guess correctly more than half of the time.
-The precision score is only 30.8\% in this test which implies that the algorithm also gives a lot of poor recommendations. One of the major drawbacks of these statistics is the fact that it assumes that every recommended item not in the visitors real behavior is a bad recommendation. This is not always the case as a visitor might not have looked at the product because he/she was unaware of its existence but might have decided to look at it if it was recommended \cite{evaluatingRecommender}. Another drawback is that the numbers says nothing about catalog coverage which is how much of the product catalog the recommendation system recommends. It is therefore possible to have a good recall rate but not be suggesting anything new to the visitors \ref{eval}.
+The precision score is only 30.8\% in this test which implies that the algorithm also gives a lot of poor recommendations. One of the major drawbacks of these statistics is the fact that it assumes that every recommended item not in the visitors real behavior is a bad recommendation. This is not always the case as a visitor might not have looked at the product because he/she was unaware of its existence but might have decided to look at it if it was recommended \cite{evaluatingRecommender}. Another drawback is that the numbers says nothing about catalog coverage which is how much of the product catalog the recommendation system recommends. It is therefore possible to have a good recall rate but not be suggesting anything new to the visitors \cite{eval}.
 As the algorithm acquires more data on all visitors as well as the visitor requesting recommendations the predictions should become even more precise.
 
 \subsubsection{Online validation}
@@ -122,7 +122,7 @@ and is recommended the following products:
 \item \textbf{34392:} Brandmand Sam 104 cm Fastelavnstøj
 \end{itemize}
 
-The visitor has looked at some of the items recommended, but others he has not. As the recommendations size increases more new products to the visitor will appear. The recommendations are all "Brandmand Sam" stuff which is all he has looked at in the past. Whether it is good or bad depends on the business and how the visitors will respond. Struct A/S has said that this is fine, however only when the system is put into production can this be determined. In the future the recommendation engine will be able to sort out his orders, but this has yet to be implemented. \\\\
+The visitor has looked at some of the items recommended, but others he has not. As the recommendations size increases more new products to the visitor will appear. The recommendations are all "Brandmand Sam" stuff which is all he has looked at in the past. Whether it is good or bad depends on the business and how the visitors will respond. These recommendations are in accordance with Struct A/S wishes as they want very similar items to be recommended. In the future the recommendation engine will be able to sort out his orders, but this has yet to be implemented. \\\\
 
 Another \textbf{visitor 0036ECB4-F5AB-4B7C-824C-8D1C832CB65A} has looked at the following products:
 \begin{itemize}
