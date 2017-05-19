@@ -38,3 +38,31 @@ The implementation of the final product required the usage of different tools. G
 Git is a popular version control system and it is often used when developing software. GitHub is a web-based Git, and served as the primary tool when planning and developing the system. All planning is documented through GitHub issues and milestones. At the initial start, all project tasks was put in the product backlog which was made of issues. The sprints was created as milestones which was filled with issues before each iteration.
 The implementation of the system was controlled with Git. A consistent way of using the tool ensured that the newest version of the system was always available to the other group member, and a roleback was always possible had it been necessary. The newest version of the system was always to be found on the \textit{master} branch. When adding new code, the group members had to create a new branch from the \textit{master} branch, to avoid conflicts later. Once the new code was added in its own branch, and tested to ensure there were no flaws, it was merged into the newest version of the \textit{master} branch.
 Besides making it possible to work simultaneously on the project, GitHub also served as a backup of the entire project.
+
+\color{red}\section{Initial data dump}
+In the beginning of the project data from one of \gls{Struct}' customers was supplied. This data was in the form of many SQL tables and most of the data was not relevant for creating product recommendations. The main tables used were the following:  \\
+\begin{itemize}
+	\item Visitor: A collection of every unique visitor who had visited the customer's website, each visitor gets a unique identifier called UID. Contains 3,073,665  visitors.
+	\item Profile: A collection of every users signed up at the website. Contains 3037 profiles.
+	\item BehaviorData: A collection of every unique action performed by visitors on the website, for example when a visitor views a product a new row is made with the visitor's UID, the product UID and the timestamp. Contains 3,326,736 visitor actions.
+	\item Order: Contains each profile's orders. Contains 5520 orders.
+	\item Product: A collection of all products on the website with their unique IDs. Contains 22,445 products.
+	\item ProductGroup: A collection of all product groups. Contains 262 product groups.
+	\item AttributeValueRendered: A collection of product and product group descriptions in different languages. Contains 409,259 descriptions:
+	
+\end{itemize}
+
+A snapshot of the visitor and behaviorData table can be seen in figure \ref{visitorTable} and \ref{behaviorTable}.
+
+\begin{figure}[H]
+	\includegraphics[scale=0.8]{Visitor_table}
+	\caption{Visitor table from the original data}
+	\label{visitorTable}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics{behaviorData_table}
+	\caption{Behavior data table from the original data}
+	\label{behaviorTable}
+\end{figure}
+
+These tables contain all the pertinent information for creating product recommendations and can be utilized after a cleaning and structuring process. This process is described in the following sections.
