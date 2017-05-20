@@ -116,14 +116,21 @@ Since all these calculations are made before the actual product recommendations 
 \end{algorithmic}
 \end{algorithm}
 
+The run time of the product recommendation part is examined below: \\
+Visitors can have a maximum of 5 top products, in the current implementation, which means the first for loop has a maximum of 5 iterations. 
+Each product can only has top 10 similar items and the second for loop is therefore maximum 10 iterations.
+Within the first for loop is 1 constant operation of retrieving data from the database. The second for loop contains 1 constant addition operation.
+The maximum of 5*10=50 product recommendations are sorted. Since the amount of products to be sorted cannot increase beyond 50 this is considered constant as well.
+If the number of recommendations requested exceeds 50, products are added from the top 20 most popular products which is a maximum of 20 operations.
+The final run time of the product recommendation algorithm is therefore 5*1*10*1*50*20 or O(1) in asymptotic notation. \\
 The entire process of requesting product recommendations, running algorithm \ref{alg:recommendation} and returning them takes less than 40ms which satisfies the non-functional requirement NF02 - Efficiency. \\\\
-When the visitor does not have enough or any behavior, recommendations are determined differently. In these cases the missing recommendations are retrieved from the top 20 most popular products in the last 30 days. The top 20 products are calculated by checking the timestamp and finding those in the last 30 days and then counting how many times each product was viewed. The top 20 products are stored in the database and can be calculated through an API call.
+When the visitor does not have enough or any behavior, recommendations are determined differently. In these cases the missing recommendations are retrieved from the top 20 most popular products in the last 30 days. The top 20 products are calculated by checking the time stamp and finding those in the last 30 days and then counting how many times each product was viewed. The top 20 products are stored in the database and can be calculated through an API call.
 
 \section{Handling new data}
 When new visitors are created or new behavior is discovered the client has to call the corresponding API functions in order to store this data alongside the other. When new behavior data is registered the program re-calculates the visitor's top product as well as the product's similar products. This way the algorithm is always up to date and the calculations can happen asynchronously and thereby have no affect the load times for the end user.
 
 \section{Hosting the API}
-This product recommendation API is hosted through Amazon WebServices in an \gls{EC2Instance} \cite{EC2}. To accomplish this the ASP.NET core project is built in a Docker container, the container is pushed to the Docker Hub and then pulled and run in the \gls{EC2Instance}. Docker is a tool that can be used to deploy applications within software containers. When a project is wrapped in a Docker container, all necessary files from the system environment is wrapped as well. Docker itself is based off the Linux kernel, and can therefore be deployed on any Linux server \cite{Docker}.  The database is similarly packed in a docker container and run in the \gls{EC2Instance}. The Docker containers have exposed ports to the rest of the internet and can be accessed via \gls{EC2Instance} public DNS or IP.
+This product recommendation API is hosted through Amazon WebServices in an \gls{EC2Instance} \cite{EC2}. To accomplish this the ASP.NET core project is built in a Docker container, the container is pushed to the Docker Hub and then pulled and run in the \gls{EC2Instance}. Docker is a tool that can be used to deploy applications within software containers. When a project is wrapped in a Docker container, all necessary files from the system environment is wrapped as well. Docker itself is based off the Linux kernel, and can therefore be deployed on any Linux server \cite{Docker}.  The database is similarly packed in a docker container and run in the \gls{EC2Instance}. The Docker containers have exposed ports to the rest of the internet and can be accessed via \gls{EC2Instance} public DNS or IP.  Docker makes changing hosting platforms trivial since the container can be deployed without worrying about environment variables.
 
 
 
