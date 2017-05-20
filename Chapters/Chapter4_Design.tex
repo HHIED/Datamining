@@ -24,7 +24,7 @@ Apart from the MVC pattern the system has a persistence layer responsible for in
 The recommendation system is designed according to the MVC pattern described above. The controller layer takes input from the user (the web shop) and passes the information to the model layer. The controller layer is split into two classes, one for handling when the user requests recommendations which relates to functional requirement F01 and another for handling the data coming from the web shops relating to functional requirements F02-F15.
 
 \subsection{Recommendation logic (Model)}
-The recommendation logic is where the main operations of the system takes place. The model layer consists of five packages, and is made accessible to the controller layer through three interfaces. This layer consists of the entities seen in the domain model in Chapter \ref{analysis} as well as classes for handling the business logic. \\. This is where the product recommendations are calculated before being sent back to the controller layer. This is also the package where any offline-calculation is made before it is stored in the database. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Chapter5}. \\
+The recommendation logic is where the main operations of the system takes place. The model layer consists of five packages, and is made accessible to the controller layer through three interfaces. This layer consists of the entities seen in the domain model in Chapter \ref{analysis} as well as classes for handling the business logic. \\This is where the product recommendations are calculated before being sent back to the controller layer. This is also the package where any offline-calculation is made before it is stored in the database. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Chapter5}. \\
 A package diagram of the Controller and Model layer as well as the persistence layer can be seen in figure \ref{fig:PackageDiagram}
 
 \begin{figure}[H]
@@ -35,7 +35,7 @@ A package diagram of the Controller and Model layer as well as the persistence l
 \end{figure}
 
 \section{Client-Server}
-When put to use, the recommendation system will be distributed and play the server role in a Client-Server model. The system should be considered an application solely for providing product recommendations. In this scenario, the client is the web shop that needs to provide recommendations to one of its users. The client is also able to ask the server to update its database or store new content in the database, but the concept is the same and just as simple as the request for product recommendations. The Client-Server model of the system can be seen in figure \ref{fig:ClientServer}
+When put to use, the recommendation system will be distributed and handle the server role in a Client-Server model. The system should be considered an application solely for providing product recommendations. In this scenario, the client is the web shop that needs to provide recommendations to one of its users. The client is also able to ask the server to update its database or store new content in the database, but the concept is the same and just as simple as the request for product recommendations. The Client-Server model of the system can be seen in figure \ref{fig:ClientServer}
 
 \begin{figure}[H]
 	\centering
@@ -45,7 +45,7 @@ When put to use, the recommendation system will be distributed and play the serv
 \end{figure}
 
 \section{RESTfull}
-To accomplish the requirement NF04 of the services being accessible as a web service a RESTfull architectural style can be used. RESTfull makes use of HTTP methodologies to present GET, POST, PUT and DELETE methods for communication. REST is preferred over SOAP because it leverages less bandwidth \cite{restfull}. \\
+RESTfull architectural style or SOAP messaging protocol can be used to accomplish requirement NF04 - Accessibility. RESTfull uses the HTTP protocol which defines GET, POST, PUT and DELETE methods for communication. REST is preferred over SOAP because it leverages less bandwidth \cite{restfull}. \\
 REST is an acronym for REpresentational State Transfer and consists of five guiding constraints \cite{rest}:
 \begin{description}
 \item [Client-Server] By separating the concerns of user interface and data storage/manipulation we improve the portability of the user interface.
@@ -58,7 +58,7 @@ REST is an acronym for REpresentational State Transfer and consists of five guid
 
 \section{Database design}
 Specific requirements for the storage of data was set by Struct, as they wanted a largely scalable structure of the data. The technology chosen was \gls{NoSQL}.
-The data demands are not clearly specified in the beginning and with No-SQL it is easy to add or remove data or even change the data types on the fly whereas traditional relational databases have very strict data requirements, this also means that all data restrictions have to be handled in the code. No-SQL's denormalized format also allows for faster retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers and many engines have built in scaling functionalities \cite{SQLvsNOSQL} which can come in handy when multiple clients begin using the service. A downside of No-SQL compared to relational databases is the fact it does not focus much on Online Transaction Processing (OLTP) which means there is no guarantee that the data is always stored completely. Overall No-SQL is a good fit for this project since scalability and speed is imperative. \\\\
+The data demands are not clearly specified in the beginning. No-SQL makes it easy to add or remove data or even change the data types. Traditional relational databases are rigid and have very strict data constraints. The flexible structure of No-SQL means that all data restrictions have to be handled in the code. The denormalized format of No-SQL allows for faster retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers and many engines have built in scaling functionalities which can come in handy when multiple clients begin using the service \cite{SQLvsNOSQL}. A downside of No-SQL compared to relational databases is the fact it does not focus much on Online Transaction Processing (OLTP) which means there is no guarantee that the data is always stored completely. Overall No-SQL is a good fit for this project since scalability and speed is imperative. \\\\
 
 A brief overview of the different terminology for SQL and No-SQL is given in table \ref{sqlvsnosql_table}.
 \begin{table}[H]
@@ -74,7 +74,7 @@ A brief overview of the different terminology for SQL and No-SQL is given in tab
 	\end{tabular}
 \end{table}
 
-The database design mimics the domain model by representing real world concepts such as a Visitors and their Behavior and Products. The No-SQL design can be seen in figure \ref{documents}.
+The database design mimics the domain model by representing real world concepts such as Products and, Visitors and their Behavior. The No-SQL design can be seen in figure \ref{documents}.
 
 \begin{table}[H]
 	\centering
@@ -85,16 +85,6 @@ The database design mimics the domain model by representing real world concepts 
 		\textbf{Document} & \textbf{Fields}                                                                                                                          & \textbf{Comment}                                                                   \\ \hline
 		Visitor           & \begin{tabular}[c]{@{}l@{}}Id\\ Behaviors\\ ProfileUID\\ CustomerUID\end{tabular}                         & The behavior array is an array of Behavior documents which contains all the behaviors of the specific visitor \\ \hline
 		Product           & \begin{tabular}[c]{@{}l@{}}Id\\ ProductGroupId\\ VisitorId\\ Description\\ Created\end{tabular} &     The visitorId array contains Ids of all visitors who have looked at this product    \\ \hline
-		Behavior & \begin{tabular}[c]{@{}l@{}}Type \\ Id \\ Timestamp \end{tabular} & A behavior document holds information about a particular behavior \\ \hline
+		Behavior & \begin{tabular}[c]{@{}l@{}}Type \\ Id \\ Timestamp \end{tabular} & A behavior document holds information about a particular view of a product.  \\ \hline
 	\end{tabular}
 \end{table}
-
-An example of a Visitort document can be seen in figure \ref{visitorDoc} and an example of a Product document can be seen in appendix \ref{productDoc}.
-\begin{figure}[H]
-	\centering
-	\includegraphics{visitorDocument}
-	\caption{A Visitor document example}
-	\label{visitorDoc}
-\end{figure}
-
-The topProducts array seen in Appendix \ref{productDoc} was not part of the original data transformation, but rather a part of the recommendation algorithm explained in Chapter \ref{Chapter5}.
