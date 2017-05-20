@@ -11,7 +11,8 @@
 
 \section{Conceptual overview of the system}
 The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC) \cite{PatternsOfEnterprise}. The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the web shop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the controller which simply communicates the data between the logic (model) of the system and the view. The logic (model) handles the data, instantiates objects and does calculations regarding product recommendations. \\
-Apart from the MVC pattern the system has a persistence layer responsible for interactions with the database. The different layers communicate through interfaces in order to be able to substitute implementations in the future. 
+Apart from the MVC pattern the system has a persistence layer responsible for interactions with the database. Whether or not persistance is a part of the MVC pattern is up for debate. If the entities were responsible for storing their own information in the database the persistance would be part of the model layer. Since this is not the case the persistance layer has been deemed to be seperate from the MVC pattern. \\
+The different layers communicate through interfaces in order to be able to substitute implementations in the future. 
 
 \begin{figure}[H]
 	\centering
@@ -44,8 +45,8 @@ When put to use, the recommendation system will be distributed and handle the se
 	\label{fig:ClientServer}
 \end{figure}
 
-\section{RESTfull}
-RESTfull architectural style or SOAP messaging protocol can be used to accomplish requirement NF04 - Accessibility. RESTfull uses the HTTP protocol which defines GET, POST, PUT and DELETE methods for communication. REST is preferred over SOAP because it leverages less bandwidth \cite{restfull}. \\
+\section{Communication technology}
+SOAP messaging protocol or a RESTfull architectural style can be used to accomplish requirement NF04 - Accessibility.\\\\ SOAP - Simple Object Access Protocol is a messaging protocol using HTTP and XML. SOAP defines the XML-based message format that applications use to communicate and inter-operate. SOAP is platform and language independent \cite{SOAP}. \\\\ RESTfull uses the HTTP protocol which defines GET, POST, PUT and DELETE methods for communication. REST is preferred over SOAP because it leverages less bandwidth \cite{restfull}. 
 REST is an acronym for REpresentational State Transfer and consists of five guiding constraints \cite{rest}:
 \begin{description}
 \item [Client-Server] By separating the concerns of user interface and data storage/manipulation we improve the portability of the user interface.
@@ -56,9 +57,10 @@ REST is an acronym for REpresentational State Transfer and consists of five guid
 \end{description}
 
 
+
 \section{Database design}
 Specific requirements for the storage of data was set by Struct, as they wanted a largely scalable structure of the data. The technology chosen was \gls{NoSQL}.
-The data demands are not clearly specified in the beginning. No-SQL makes it easy to add or remove data or even change the data types. Traditional relational databases are rigid and have very strict data constraints. The flexible structure of No-SQL means that all data restrictions have to be handled in the code. The denormalized format of No-SQL allows for faster retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers and many engines have built in scaling functionalities which can come in handy when multiple clients begin using the service \cite{SQLvsNOSQL}. A downside of No-SQL compared to relational databases is the fact it does not focus much on Online Transaction Processing (OLTP) which means there is no guarantee that the data is always stored completely. Overall No-SQL is a good fit for this project since scalability and speed is imperative. \\\\
+The data demands are not clearly specified in the beginning. No-SQL makes it easy to add or remove data or even change the data types. Traditional relational databases are rigid and have very strict data constraints. The flexible structure of No-SQL means that all data restrictions have to be handled in the code. The denormalized format of No-SQL allows for simpler retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers. Relational databases scale up by adding more processors, more storage and caching systems. These databases are designed as single units and must maintain data integrity and enforce schema rules which makes them rigid. This rigidness is what does not promote upward scalability \cite{NoSQLScalability}.  Many No-SQL engines have built in scaling functionalities which can come in handy when multiple clients begin using the service \cite{SQLvsNOSQL}. A downside of No-SQL compared to relational databases is the fact it does not focus much on Online Transaction Processing (OLTP) which means there is no guarantee that the data is always stored completely. Overall No-SQL is a good fit for this project since scalability is imperative and OLTP is not essential. \\\\
 
 A brief overview of the different terminology for SQL and No-SQL is given in table \ref{sqlvsnosql_table}.
 \begin{table}[H]
