@@ -73,6 +73,14 @@ The collaborative filter initially requires an exploration of each product. The 
 \end{algorithmic}
 \end{algorithm}
 
+An overview of the process of generating a similarity score and storing it in the database can be seen in the flowchart in figure \ref{flowChartSimilarity}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{FlowchartCalculateSimilarity}
+\caption{The process of generating a similarity score for a product}
+\label{flowChartSimilarity}
+\end{figure}
 
 When algorithms \ref{alg:collaborativeFilter} and \ref{alg:calculateSimilarity} are completed, each product in the database now has an array with the top 10 similar products based on amount of views, description and product group. \\
 The next step is calculating the top products for each visitor, these are the products the specific visitor has viewed the most. This calculation can be seen in algorithm \ref{alg:topProducts}. In line 1 a loop is initiated, which iterates through each visitor. In line 2 a dictionary is prepared to contain all products the visitor have shown interest in as keys, and the amount of times he have looked at these as the value. Line 2-5 checks all behavior stored on the visitor (key of visitorProducts), and increment the value by 1. In line 6 the products are sorted descending, and the 5 products that the visitor have shown greatest interest in, is stored in the database (line 7). This calculation also requires a large amount of resources the first time, but very little to maintain.
@@ -115,6 +123,15 @@ Since all these calculations are made before the actual product recommendations 
 \State 
 \end{algorithmic}
 \end{algorithm}
+
+The flowchart in figure \ref{flowchartRecomm} shows the process of requesting product recommendations.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{FlowchatRequestRecomms}
+\caption{The process of requesting 5 recommendations for visitor P}
+\label{flowchartRecomm}
+\end{figure}
 
 The run time of the product recommendation part is examined below: \\
 Visitors can have a maximum of 5 top products, in the current implementation, which means the first for loop has a maximum of 5 iterations. 
