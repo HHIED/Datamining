@@ -9,6 +9,8 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
+This section takes a look at validation of the system from different viewpoints. A validation of the code is described in terms of integration tests. The recommendations are validated statistically by using two standard measures. Concrete examples of recommendations are given to provide some insight into what kind of recommendations are provided for different visitors.
+
 \section{Integration tests}
 The code is validated through a series of top-down, black-box integration tests. The purpose of these tests is to ensure the functionality of the two controllers, \textit{ProductRecommendationController} and \textit{DataController}. An overview of the test cases can be seen in table \ref{testCases}.
 
@@ -26,18 +28,19 @@ GetRecommendationForVisitor & Uppercase/lowercase database                      
 GetRecommendationForVisitor & Number of recommendations being larger than available products & String array of all valid products \\ \hline
 GetRecommendationForVisitor & Visitor with no behavior                                       & String array of size 5             \\ \hline
 GetRecommendationForVisitor & Non existing database                                          & Empty string array                 \\ \hline
-PutVisitor                  & New visitor                                                    & Visitor exists in database         \\ \hline
-PutVisitor                  & Existing visitor                                               & Runs without exceptions            \\ \hline
-PutVisitor                  & Non existing database                                          & Runs without exceptions            \\ \hline
-PutProduct                  & New product                                                    & Product exists in database         \\ \hline
-PutProduct                  & Existing product                                               & Runs without exceptions            \\ \hline
-PutProduct                  & Non existing database                                          & Runs without exceptions            \\ \hline
-PutBehavior                 & New behavior                                                   & behavior exists on visitor         \\ \hline
-PutBehavior                 & Non existing database                                          & Runs without exceptions            \\ \hline
+PutVisitor                  & New visitor                                                    & HTTP status code 201 created         \\ \hline
+PutVisitor                  & Existing visitor                                               & HTTP status code 400 Bad Request            \\ \hline
+PutVisitor                  & Non existing database                                          & HTTP status code 400 Bad Request            \\ \hline
+PutProduct                  & New product                                                    & HTTP status code 201 created         \\ \hline
+PutProduct                  & Existing product                                               & HTTP status code 400 Bad Request            \\ \hline
+PutProduct                  & Non existing database                                          & HTTP status code 400 Bad Request           \\ \hline
+PutBehavior                 & New behavior                                                   & HTTP status code 200 OK         \\ \hline
+PutBehavior                 & Non existing database                                          & HTTP status code 400 Bad Request          \\ \hline
 \end{tabular}
 \end{table}
 
 Most of the tests of the recommendation part is tested with 5 recommendations being requested, hence the return of a string array with size 5. \\
+The put methods shoud return HTTP status code 201 Created if a new item is created in the database, and 200 OK if an item is updated and 400 Bad Request if it fails.
 All tests run successfully and a result overview can be seen in figure \ref{testResult}
 \begin{figure}[H]
 \centering
@@ -45,6 +48,7 @@ All tests run successfully and a result overview can be seen in figure \ref{test
 \caption{Result of all integration tests}
 \label{testResult}
 \end{figure}
+
 
 \section{Validation of recommendations}
 
@@ -150,7 +154,7 @@ and is recommended these products:
 The two LEGO recommendations in this example might not seem thematically accurate, however since they have been recommended they must have a high similarity score to one or both of the products the visitor has looked at. A closer look at the data shows the two LEGO products to have similarity scores of 24 and 15 respectively to product 42106. Since these products are not in the same product group and have zero matching descriptions the high similarity score is the amount of times they have been looked at together with this product. The main product, product 42106, have been looked at by 9 other visitors and these 9 visitors have then looked at the first LEGO product 24 times and the second LEGO product 15 times.
 
 \subsection{Online validation}
-When the recommendation algorithm is put into production several new and better ways of evaluating the system becomes available. As the visitors get recommendations their behavior is logged and it is therefore easy to see how many of the recommendations are actually used and adjust the algorithm thereafter.
+When the recommendation algorithm is put into production several new and better ways of evaluating the system becomes available. As the visitors get recommendations their behavior is logged and it is therefore easy to see how many of the recommendations are actually used and adjust the algorithm thereafter. Online validations have not been possible as part of the project scope. In an online scenario the recommendations could be examined by calculating click-through rates and conversion rate. Click-through rate is how many percent of the recommendations have resulted in the visitor viewing the product. Conversion rate is how many percent of the recommendations have resulted in a purchase. Furthermore the turnover of the web shop can be analyzed over a period of time to measure whether or not the recommendations are effective.
 This adjustment can potentially be automated by using machine learning - this is covered in more detail in chapter \ref{Chapter9}.
 
  
