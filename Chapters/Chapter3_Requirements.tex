@@ -10,11 +10,11 @@
 This chapter covers the details of the functional and non-functional requirements of the product and how these were derived.
 
 \section{Requirements engineering}
-The requirements of the project are categorized into functional and non-functional requirements. These requirements were derived from the original case given by Struct A/S (Appendix \ref{Case}), continuously planned meetings with Struct A/S and our supervisor, and as a part of the constant research done during the progress of the project. \\
+The requirements of the project are categorized into functional and non-functional requirements. These requirements were derived from the original case (Appendix \ref{Case}), continuously planned meetings with Struct A/S, and as a part of the constant research done during the project. \\
 The functionality of the final product fulfills the most important aspects of the case, and the requirements derived from the client meetings.
 
 \subsection{Functional requirements} 
-The most important features of the system includes delivery of good quality product recommendation and handling of new data. These are very complex features and a lot of requirements must be fulfilled in order to realize them. The most crucial functional requirements can be seen in table \ref{table:functionalrequirements}. These requirements have been the driving force throughout the project. For a complete list of functional requirements, see the git backlog \cite{ProductBacklog}.
+The most important features of the system includes delivery of quality product recommendations and handling of new data. These are very complex features and several requirements must be fulfilled in order to realize them. The functional requirements can be seen in table \ref{table:functionalrequirements}. These requirements have been the driving force throughout the project.
 \begin{table}[]
 	\centering
 		\begin{tabular}{l|l}
@@ -55,10 +55,10 @@ The most important features of the system includes delivery of good quality prod
 	\label{table:functionalrequirements}
 \end{table}
 
-As seen in table \ref{table:functionalrequirements}, the functional requirements of the final product can be compressed into 15 requirements. This corresponds with the wish of a simple API, that provides good quality product recommendations. F01 - \textit{provide recommendations}, was the most important requirement and has therefore acted as an ongoing task during the entire development of the product. F02-F15 were secondary requirements as they were not crucial before the recommendation algorithm was implemented. Once the algorithm was developed, the remaining functional requirements were needed to keep the data updated.
+As seen in table \ref{table:functionalrequirements}, the final product consists of 15 functional requirements. This corresponds with the wish of a simple API, that provides good quality product recommendations. F01 - \textit{provide recommendations}, was the most important requirement and has therefore acted as an ongoing task during the entire development of the product. F02-F15 are secondary requirements and not crucial before the recommendation algorithm was implemented. Once the algorithm is developed, the remaining functional requirements are needed to keep the data updated.
 
 \subsection{Non-functional requirements}
-The non-functional requirements were described at an early stage, and later clarified at the planned meetings. The non-functional requirements can be seen in table \ref{table:nonfunctionalrequirements}.
+The non-functional requirements can be seen in table \ref{table:nonfunctionalrequirements}.
 
 \begin{table}[]
 	\centering
@@ -74,6 +74,6 @@ The non-functional requirements were described at an early stage, and later clar
 	\label{table:nonfunctionalrequirements}
 \end{table}
 
-Few non-functional requirements were discovered, but these turned out to be challenging to accommodate. The platform Struct use as the main tool for developing is based on the programming language C\#. As a result of this, NF01 was derived. Net core was chosen because of its high performance and scalable systems, which was needed to realize NF02 - \textit{Recommendations must be delivered within 40ms}.\cite{NetCore}
-NF02 was probably the most challenging requirement to fulfill, however very important since a fast responding website is imperative. At the beginning Struct had a wish that the new database for recommendation data had to be scalable up to billions of records. Because of the denormalized data structure, it was agreed that a No-SQL database would be the right approach \cite{NoSQLScalability}. This resulted in requirement NF03 - \textit{Data should be stored in a scalable No-SQL database}. In order to lower the amount of effort needed to integrate the recommendation system, the API had to easily accessible and the data output had to be in a standardized format. This resulted in requirement NF04 - \textit{The API should be easy accessible through a web service}.\\
-The functional and non-functional requirements are used throughout the project to analyze, design, implement and test the system. An analysis of the requirements provides an overview and better understanding of the system.
+Few non-functional requirements were discovered, but these are challenging to accommodate. The platform Struct use as the main tool for developing is based on the programming language C\#. NF01 - \textit{Programming language and platform} was derived as a result of this. \gls{aspnet} was chosen because of its high performance and scalable systems, which was needed to realize NF02 - \textit{Efficiency} \cite{NetCore}.
+NF02 was probably the most challenging requirement to fulfill, however very important since a fast responding website is imperative. Struct wished for a new database for recommendation data, able to scale up to billions of records. A No-SQL database was the right approach because of its outward scalability \cite{NoSQLScalability}. This resulted in requirement NF03 - \textit{Scalability}. The \gls{API} had to be easily accessible and the data output had to be in a standardized format, in order to lower the amount of effort needed to integrate the recommendation system. This resulted in requirement NF04 - \textit{Accessibility}.\\
+The functional and non-functional requirements are used throughout the project to analyze, design, implement and test the system. An analysis of the requirements provides an overview and better conceptual understanding of the system.

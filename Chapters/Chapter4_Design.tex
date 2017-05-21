@@ -3,7 +3,7 @@
 
 \chapter{Design} % Main chapter title
 
-\label{Chapter3} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+\label{Design} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
@@ -11,7 +11,7 @@
 This chapter aims to describe the design of the system in terms of patterns, technologies and structure. The design is derived from the analysis done in the previous chapter.
 
 \section{Conceptual overview of the system}
-The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC) \cite{PatternsOfEnterprise}. The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the web shop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the controller which simply communicates the data between the logic (model) of the system and the view. The logic (model) handles the data, instantiates objects and does calculations regarding product recommendations. \\
+The system is developed as a part of the classic architectural pattern, Model-View-Controller (MVC) \cite{PatternsOfEnterprise}. The system itself consists of the Model and Controller part, and lets the client be responsible for the view, which in this case is the web shop. Figure \ref{fig:MVC} shows how the system is layered. Data is sent to the controller which communicates the data between the logic (model) of the system and the view. The logic (model) handles the data, instantiates objects and does calculations regarding product recommendations. \\
 Apart from the MVC pattern the system has a persistence layer responsible for interactions with the database. Whether or not persistance is a part of the MVC pattern is up for debate. If the entities were responsible for storing their own information in the database the persistance would be part of the model layer. Since this is not the case the persistance layer has been deemed to be seperate from the MVC pattern. \\
 The different layers communicate through interfaces in order to be able to substitute implementations in the future. 
 
@@ -23,10 +23,10 @@ The different layers communicate through interfaces in order to be able to subst
 \end{figure}
 
 \subsection{Recommendation API (Controller)}
-The recommendation system is designed according to the MVC pattern described above. The controller layer takes input from the user (the web shop) and passes the information to the model layer. The controller layer is split into two classes, one for handling when the user requests recommendations which relates to functional requirement F01 and another for handling the data coming from the web shops relating to functional requirements F02-F15.
+The recommendation system is designed according to the MVC pattern described above. The controller layer takes input from the view (the web shop) and passes the information to the model layer. The controller layer is split into two classes, one for recommendation requests and another for data management.
 
 \subsection{Recommendation logic (Model)}
-The recommendation logic is where the main operations of the system takes place. The model layer consists of five packages, and is made accessible to the controller layer through three interfaces. This layer consists of the entities seen in the domain model in Chapter \ref{Analysis} as well as classes for handling the business logic. \\This is where the product recommendations are calculated before being sent back to the controller layer. This is also the package where any offline-calculation is made before it is stored in the database. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Chapter5}. \\
+The recommendation logic is where the main operations of the system takes place. The model layer consists of four packages, and is made accessible to the controller layer through three interfaces. This layer consists of the entities seen in the domain model in Chapter \ref{Analysis} as well as classes for handling the business logic. \\In this layer product recommendations are calculated before being sent back to the controller layer. This layer is also responsible for offline-calculations. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Chapter5}. \\
 A package diagram of the Controller and Model layer as well as the persistence layer can be seen in figure \ref{fig:PackageDiagram}
 
 \begin{figure}[H]
@@ -37,7 +37,7 @@ A package diagram of the Controller and Model layer as well as the persistence l
 \end{figure}
 
 \section{Client-Server}
-When put to use, the recommendation system will be distributed and handle the server role in a Client-Server model. The system should be considered an application solely for providing product recommendations. In this scenario, the client is the web shop that needs to provide recommendations to one of its users. The client is also able to ask the server to update its database or store new content in the database, but the concept is the same and just as simple as the request for product recommendations. The Client-Server model of the system can be seen in figure \ref{fig:ClientServer}
+When put to use, the recommendation system will be distributed and handle the server role in a Client-Server model. The system should be considered an application solely for providing product recommendations. In this scenario, the client is the web shop that needs to provide recommendations to one of its users. The client is able to ask the server to update its database or store new content in the database. The concept is the same and just as simple as the request for product recommendations. The Client-Server model of the system can be seen in figure \ref{fig:ClientServer}
 
 \begin{figure}[H]
 	\centering
@@ -61,8 +61,7 @@ REST is an acronym for REpresentational State Transfer and consists of five guid
 
 \section{Database design}
 Specific requirements for the storage of data was set by Struct, as they wanted a largely scalable structure of the data. The technology chosen was \gls{NoSQL}.
-The data demands are not clearly specified in the beginning. No-SQL makes it easy to add or remove data or even change the data types. Traditional relational databases are rigid and have very strict data constraints. The flexible structure of No-SQL means that all data restrictions have to be handled in the code. The denormalized format of No-SQL allows for simpler retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers. Relational databases scale up by adding more processors, more storage and caching systems. These databases are designed as single units and must maintain data integrity and enforce schema rules which makes them rigid. This rigidness is what does not promote upward scalability \cite{NoSQLScalability}.  Many No-SQL engines have built in scaling functionalities which can come in handy when multiple clients begin using the service \cite{SQLvsNOSQL}. A downside of No-SQL compared to relational databases is the fact it does not focus much on Online Transaction Processing (OLTP) which means there is no guarantee that the data is always stored completely. Overall No-SQL is a good fit for this project since scalability is imperative and OLTP is not essential. \\\\
-
+This is due to the data demands not being clearly specified from the start of the project. No-SQL makes it easy to add or remove data or even change the data types. Traditional relational databases have very strict data constraints. The flexible structure of No-SQL means that all data restrictions have to be handled in the code. The denormalized format of No-SQL allows for simpler retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers. Relational databases scale up by adding more processors, more storage and caching systems. These databases are designed as single units and must maintain data integrity and enforce schema rules which makes them rigid. This rigidness is what does not promote outward scalability \cite{NoSQLScalability}.  Many No-SQL engines have built in scaling functionalities which can come in handy when multiple clients begin using the service \cite{SQLvsNOSQL}. A downside of No-SQL compared to relational databases is the fact that it does not focus on Online Transaction Processing (OLTP) which means there is no guarantee that the data is always stored completely. Overall No-SQL is a good fit for this project since scalability is imperative and OLTP is not essential.\\
 A brief overview of the different terminology for SQL and No-SQL is given in table \ref{sqlvsnosql_table}.
 \begin{table}[H]
 	\centering
