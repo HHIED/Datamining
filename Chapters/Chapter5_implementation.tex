@@ -3,7 +3,7 @@
 
 \chapter{Implementation} % Main chapter title
 
-\label{Chapter5} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+\label{Implementation} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
@@ -12,24 +12,24 @@ This chapter describes the design as it is implemented and hosted. It takes a lo
 
 \section{Solution overview}
 
-The final solution consists of a \gls{REST} API build with ASP.NET Core and a MongoDB \gls{NoSQL} database. Both are hosted using Amazon Webservices in an EC2 instance using Docker. \\
-The API consists of the commands seen in Appendix \ref{APICommands}. \\
+The final solution consists of a \gls{REST} \gls{API} build with \gls{aspnet} and a \gls{MongoDB} \gls{NoSQL} database. Both are hosted using \gls{amazonwebservice} in an \gls{EC2Instance} using \gls{Docker}. \\
+The \gls{API} consists of the commands seen in Appendix \ref{APICommands}. \\
 This section covers the realization of the design derived from the requirements and the analysis.
 
 \section{Creating the database}
 The original data was in the form of SQL tables with a lot of attributes not neccessary for product recommendations. 
-This data was transfered to MongoDB using a series of Python scripts. Only the data discovered in the design chapter was transfered. The Python scripts are attached with the source code.
-To get a new client setup requires running many API calls or running the python scripts, in order to get the already acquired data to its No-SQL format.
+This data was transfered to \gls{MongoDB} using a series of Python scripts. Only the data discovered in the design chapter was transfered. The Python scripts are attached with the source code.
+To get a new client setup requires running many \gls{API} calls or running the python scripts, in order to get the already acquired data to its \gls{NoSQL} format.
 
 \section{The product recommendation algorithm}
-There are multiple ways to implement a product recommendation algorithm. The method chosen for this project is called Item-to-Item collaborative filtering. Other methods and the reasoning why these were not chosen is described in further detail in Chapter \ref{RelatedWork}. \\\\
+There are multiple ways to implement a product recommendation algorithm. The method chosen for this project is called Item-to-Item \gls{collaborativefiltering}. Other methods and the reasoning why these were not chosen is described in further detail in Chapter \ref{RelatedWork}. \\\\
 
-Item-to-Item collaborative filtering is a data mining method to link items (products) with other items in terms of their similarity.
+Item-to-Item \gls{collaborativefiltering} is a \gls{datamining} method to link items (products) with other items in terms of their similarity.
 The specifics of the algorithm depends on the implementation. In this project each product is compared to other products based on how much they have been viewed together by customers, the likeness of their description and their product group. \\
 The collaborative filter initially requires an exploration of each product. The visitors of each product are examined to discover what other products they have shown interest in. This uses a lot of resources, but after the first run only new behavior has to be re-calculated. Pseudo code of the algorithm can be seen in algorithm \ref{alg:collaborativeFilter}. At line 1 a for-loop is initiated, iterating through all products in the system. Line 2 prepares a dictionary where the similarity scores of the product will be stored. Line 3-11 loops through all visitors who have looked at the product. For each visitor (line 3) a loop is initiated looping through all products the visitor have looked at (line 4). In line 5 a check is made to see if the dictionary, containing the product similarity scores, already contain the product. If so, the score of that product is incremented by 1 (line 6). If not, the product is added to the dictionary (line 8). Once all the products that the visitor has shown interest in is looped through, the next visitor is examined. Once all visitors associated with the product are examined, the product scores are sorted descending (line 12). Once all products related to the product \textit{p} is found, the final similarity score is calculated for each of these products (line 13-15). Finally the product similarity scores are sorted descending and the top 10 most similar products to product \textit{p} are stored in the database (line 17-18), and the same procedure is done to the next product. The calculation of the similarity score can be seen in algorithm \ref{alg:calculateSimilarity}. The main product (\textit{p} from algorithm \ref{alg:collaborativeFilter}) is compared to a related product from \textit{productScores} calculated in algorithm \ref{alg:collaborativeFilter}. If the two products shares the same product group, the \textit{productGroupFactor} is set (line 4-6). Then the description of the two products are compared (line 8-12). For each word that matches in the two descriptions, the \textit{numOfSimAttributes} is incremented by 1. If there is no similar words in the two descriptions, the \textit{similarAttributeFactor} is set to 0. Finally the similarity score is calculated (line 16).\\\\
 
 \begin{algorithm}[H]
-\caption{Item-to-Item collaborative filtering algorithm}
+\caption{Item-to-Item \gls{collaborativefiltering} algorithm}
 \label{alg:collaborativeFilter}
 \begin{algorithmic}[1]
 \ForAll{Products p}
@@ -152,13 +152,13 @@ The final run time of the product recommendation algorithm is \\
 
 50000 can seem like a large number, but it is a constant which means the algorithm runs in asymptotic time O(1). \\
 The entire process of requesting product recommendations, running algorithm \ref{alg:recommendation} and returning them takes less than 40ms which satisfies the non-functional requirement NF02 - Efficiency. \\\\
-When the visitor does not have enough or any behavior, recommendations are determined differently. In these cases the missing recommendations are retrieved from the top 20 most popular products in the last 30 days. The top 20 products are calculated by retrieving the behaviors from the last 30 days. The behaviors are iterated to see which products have the most views. The top 20 products are stored in the database and an API call will initiate the calculation.
+When the visitor does not have enough or any behavior, recommendations are determined differently. In these cases the missing recommendations are retrieved from the top 20 most popular products in the last 30 days. The top 20 products are calculated by retrieving the behaviors from the last 30 days. The behaviors are iterated to see which products have the most views. The top 20 products are stored in the database and an \gls{API} call will initiate the calculation.
 
 \section{Handling new data}
-When new visitors are created or new behavior is discovered the client has to call the corresponding API functions in order to store this data. When new behavior data is registered the program re-calculates the top products of the visitor along with the similar products of the product. This way the data is always up to date. The calculations can happen asynchronously and have no affect on the load times for the end user.
+When new visitors are created or new behavior is discovered the client has to call the corresponding \gls{API} functions in order to store this data. When new behavior data is registered the program re-calculates the top products of the visitor along with the similar products of the product. This way the data is always up to date. The calculations can happen asynchronously and have no affect on the load times for the end user.
 
-\section{Hosting the API}
-The product recommendation API is hosted through Amazon WebServices in an \gls{EC2Instance} \cite{EC2}. The ASP.NET core project is built in a Docker container, the container is pushed to the Docker Hub and then pulled and run in the \gls{EC2Instance}. Docker is a tool that can be used to deploy applications within software containers. When a project is wrapped in a \gls{DockerContainer}, all necessary files from the system environment are wrapped as well. Docker itself is based off the Linux kernel, and can be deployed on any Linux server \cite{Docker}.  The database is similarly packed in a docker container and run in the \glspl{EC2Instance}. The Docker containers have exposed ports to the rest of the internet and can be accessed via \gls{EC2Instance} public DNS or IP.  Docker makes changing hosting platforms trivial since the container can be deployed without worrying about environment variables.
+\section{Hosting the \gls{API}}
+The product recommendation \gls{API} is hosted through \gls{amazonwebservice} in an \gls{EC2Instance} \cite{EC2}. The \gls{aspnet} project is built in a gls{DockerContainer}, the container is pushed to the \gls{Docker} Hub and then pulled and run in the \gls{EC2Instance}. \gls{Docker} is a tool that can be used to deploy applications within software containers. When a project is wrapped in a \gls{DockerContainer}, all necessary files from the system environment are wrapped as well. \gls{Docker} itself is based off the Linux kernel, and can be deployed on any Linux server \cite{Docker}.  The database is similarly packed in a \gls{Docker} container and run in the \glspl{EC2Instance}. The glspl{DockerContainer} have exposed ports to the rest of the internet and can be accessed via \gls{EC2Instance} public DNS or IP.  \gls{Docker} makes changing hosting platforms trivial since the container can be deployed without worrying about environment variables.
 
 
 
