@@ -76,7 +76,7 @@ Recall and Precision are two measures used for offline validation of product rec
 These measures are found using a method where a percentage of the data available is used as regular input data and another percentage as test data \cite{eval}. The evaluation run in this project used 80 percent of the data as input and tested on the remaining 20 percent. More specifically the remaining 20 percent was used in the following way:
 \begin{itemize}
 \item Take each visitor with more than two behaviors
-\item Input half of the visitor's behaviors via the API
+\item Input half of the visitor's behaviors via the \gls{API}
 \item Generate 5 recommendations for the specific visitor
 \item See if the remaining half of his behaviors are in the recommended 5 items.
 \end{itemize}
@@ -155,6 +155,6 @@ The two LEGO recommendations in this example might not seem thematically accurat
 
 \subsection{Online validation}
 When the recommendation algorithm is put into production, several new and better ways of evaluating the system becomes available. As the visitors get recommendations their behavior is logged and it is possible to see how many of the recommendations are actually used and adjust the algorithm thereafter. Online validations have not been possible as part of the project scope. In an online scenario the recommendations could be examined by calculating click-through rates and conversion rate. Click-through rate is how many percent of the recommendations have resulted in the visitor viewing the product. Conversion rate is how many percent of the recommendations have resulted in a purchase. Furthermore the turnover of the web shop can be analyzed over a period of time to measure whether or not the recommendations are effective.
-This adjustment can potentially be automated by using machine learning - this is covered in more detail in chapter \ref{Chapter9}.
+This adjustment can potentially be automated by using machine learning - this is covered in more detail in chapter \ref{FutureWork}.
 
  
