@@ -22,11 +22,11 @@ The different layers communicate through interfaces in order to be able to subst
 	\label{fig:MVC}
 \end{figure}
 
-\subsection{Recommendation API (Controller)}
+\subsection{Recommendation \gls{API} (Controller)}
 The recommendation system is designed according to the MVC pattern described above. The controller layer takes input from the view (the web shop) and passes the information to the model layer. The controller layer is split into two classes, one for recommendation requests and another for data management.
 
 \subsection{Recommendation logic (Model)}
-The recommendation logic is where the main operations of the system takes place. The model layer consists of four packages, and is made accessible to the controller layer through three interfaces. This layer consists of the entities seen in the domain model in Chapter \ref{Analysis} as well as classes for handling the business logic. \\In this layer product recommendations are calculated before being sent back to the controller layer. This layer is also responsible for offline-calculations. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Chapter5}. \\
+The recommendation logic is where the main operations of the system takes place. The model layer consists of four packages, and is made accessible to the controller layer through three interfaces. This layer consists of the entities seen in the domain model in Chapter \ref{Analysis} as well as classes for handling the business logic. \\In this layer product recommendations are calculated before being sent back to the controller layer. This layer is also responsible for offline-calculations. The Entities and Utility package creates an easier and more manageable way of communicating data around within the model layer. All communication between the Controller-layer and the Model-layer is done through the interfaces seen in the Communication package. These interfaces are implemented by their corresponding classes in the Business and Persistence packages. The implementation of the Model-layer is discussed further in Chapter \ref{Implementation}. \\
 A package diagram of the Controller and Model layer as well as the persistence layer can be seen in figure \ref{fig:PackageDiagram}
 
 \begin{figure}[H]
@@ -47,8 +47,8 @@ When put to use, the recommendation system will be distributed and handle the se
 \end{figure}
 
 \section{Communication technology}
-SOAP messaging protocol or a RESTfull architectural style can be used to accomplish requirement NF04 - Accessibility.\\\\ SOAP - Simple Object Access Protocol is a messaging protocol using HTTP and XML. SOAP defines the XML-based message format that applications use to communicate and inter-operate. SOAP is platform and language independent \cite{SOAP}. \\\\ RESTfull uses the HTTP protocol which defines GET, POST, PUT and DELETE methods for communication. REST is preferred over SOAP because it leverages less bandwidth \cite{restfull}. 
-REST is an acronym for REpresentational State Transfer and consists of five guiding constraints \cite{rest}:
+SOAP messaging protocol or a \gls{REST} full architectural style can be used to accomplish requirement NF04 - Accessibility.\\\\ SOAP - Simple Object Access Protocol is a messaging protocol using \gls{HTTP} and \gls{XML}. SOAP defines the \gls{XML}-based message format that applications use to communicate and inter-operate. SOAP is platform and language independent \cite{SOAP}. \\\\ \gls{REST}full uses the \gls{HTTP} protocol which defines GET, POST, PUT and DELETE methods for communication. \gls{REST} is preferred over SOAP because it leverages less bandwidth \cite{restfull}. 
+\gls{REST} is an acronym for REpresentational State Transfer and consists of five guiding constraints \cite{rest}:
 \begin{description}
 \item [Client-Server] By separating the concerns of user interface and data storage/manipulation we improve the portability of the user interface.
 \item [Stateless] The server shall hold no state information about the client between requests.
@@ -60,23 +60,23 @@ REST is an acronym for REpresentational State Transfer and consists of five guid
 
 
 \section{Database design}
-Specific requirements for the storage of data was set by Struct, as they wanted a largely scalable structure of the data. The technology chosen was \gls{NoSQL}.
-This is due to the data demands not being clearly specified from the start of the project. No-SQL makes it easy to add or remove data or even change the data types. Traditional relational databases have very strict data constraints. The flexible structure of No-SQL means that all data restrictions have to be handled in the code. The denormalized format of No-SQL allows for simpler retrieval of a single item without having to do joins or complex SQL queries. Finally No-SQL is easier to scale across multiple servers. Relational databases scale up by adding more processors, more storage and caching systems. These databases are designed as single units and must maintain data integrity and enforce schema rules which makes them rigid. This rigidness is what does not promote outward scalability \cite{NoSQLScalability}.  Many No-SQL engines have built in scaling functionalities which can come in handy when multiple clients begin using the service \cite{SQLvsNOSQL}. A downside of No-SQL compared to relational databases is the fact that it does not focus on Online Transaction Processing (OLTP) which means there is no guarantee that the data is always stored completely. Overall No-SQL is a good fit for this project since scalability is imperative and OLTP is not essential.\\
-A brief overview of the different terminology for SQL and No-SQL is given in table \ref{sqlvsnosql_table}.
+Specific requirements for the storage of data was set by \gls{Struct}, as they wanted a largely scalable structure of the data. The technology chosen was \gls{NoSQL}.
+This is due to the data demands not being clearly specified from the start of the project. \gls{NoSQL} makes it easy to add or remove data or even change the data types. Traditional relational databases have very strict data constraints. The flexible structure of \gls{NoSQL} means that all data restrictions have to be handled in the code. The denormalized format of \gls{NoSQL} allows for simpler retrieval of a single item without having to do joins or complex SQL queries. Finally \gls{NoSQL} is easier to scale across multiple servers. Relational databases scale up by adding more processors, more storage and caching systems. These databases are designed as single units and must maintain data integrity and enforce schema rules which makes them rigid. This rigidness is what does not promote outward scalability \cite{NoSQLScalability}.  Many \gls{NoSQL} engines have built in scaling functionalities which can come in handy when multiple clients begin using the service \cite{SQLvsNOSQL}. A downside of \gls{NoSQL} compared to relational databases is the fact that it does not focus on Online Transaction Processing (OLTP) which means there is no guarantee that the data is always stored completely. Overall \gls{NoSQL} is a good fit for this project since scalability is imperative and OLTP is not essential.\\
+A brief overview of the different terminology for SQL and \gls{NoSQL} is given in table \ref{sqlvsnosql_table}.
 \begin{table}[H]
 	\centering
-	\caption{SQL vs No-SQL terminology}
+	\caption{SQL vs \gls{NoSQL} terminology}
 	\label{sqlvsnosql_table}
 	\begin{tabular}{|l|l|p{8cm}|}
 		\hline
-		\textbf{SQL}   & \textbf{No-SQL}     & \textbf{Comment}                                                                                                    \\ \hline
+		\textbf{SQL}   & \textbf{\gls{NoSQL}}     & \textbf{Comment}                                                                                                    \\ \hline
 		Table & Collection &                                                                                                            \\ \hline
-		Row   & Document   & A No-SQL document can contain more complex data types compared to a row in SQL e.g arrays or other documents \\
+		Row   & Document   & A \gls{NoSQL} document can contain more complex data types compared to a row in SQL e.g arrays or other documents \\
 		\hline
 	\end{tabular}
 \end{table}
 
-The database design mimics the domain model by representing real world concepts such as Products and, Visitors and their Behavior. The No-SQL design can be seen in figure \ref{documents}.
+The database design mimics the domain model by representing real world concepts such as Products and, Visitors and their Behavior. The \gls{NoSQL} design can be seen in figure \ref{documents}.
 
 \begin{table}[H]
 	\centering
